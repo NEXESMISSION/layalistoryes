@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <script>history.scrollRestoration = 'manual';</script>
   <title>Layali — قصة مخصصة</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1292,6 +1293,11 @@
   </footer>
 
   <script>
+    (function () {
+      window.scrollTo(0, 0);
+      document.addEventListener('DOMContentLoaded', function () { window.scrollTo(0, 0); });
+      window.addEventListener('load', function () { window.scrollTo(0, 0); });
+    })();
     (function () {
       var burger = document.getElementById('burger-btn');
       var menu = document.getElementById('mobile-menu');

@@ -10,14 +10,12 @@
   <style>
     :root {
       /* From logo + reference: pastels + brand orange */
-      --blue-deep: #2c5282;
-      --blue-mid: #4299e1;
       --lavender: #b794f6;
       --purple: #9f7aea;
       --pink: #ed64a6;
       --gold: #ecc94b;
       --white: #fafafa;
-      --cloud: #e6fffa;
+      --cream: #fdf8f3;
       --text: #111111;
       --text-soft: #333333;
       --brand-orange: #F79328;
@@ -32,7 +30,7 @@
 
     body {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      background: linear-gradient(165deg, var(--white) 0%, var(--cloud) 50%, #fef5f8 100%);
+      background: linear-gradient(165deg, var(--white) 0%, #fdf8f3 50%, #fef5f8 100%);
       color: var(--text);
       min-height: 100vh;
       overflow-x: hidden;
@@ -174,16 +172,20 @@
       }
     }
 
-    /* ----- Tag bar (top promo) ----- */
+    /* ----- Tag bar (top promo) — sticky, bigger ----- */
     .tag-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
       background: linear-gradient(90deg, var(--purple) 0%, var(--pink) 100%);
       color: var(--white);
       text-align: center;
-      padding: 0.5rem 1rem;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 500;
+      padding: 0.85rem 1.25rem;
+      font-family: 'Noto Kufi Arabic', 'Poppins', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 600;
       letter-spacing: 0.02em;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     }
 
     /* ----- Hero: RTL — images left, text right (Arabic) ----- */
@@ -197,6 +199,7 @@
       grid-template-columns: 1fr;
       gap: 1.5rem;
       align-items: center;
+      background: #fdf8f3;
     }
 
     .hero-content {
@@ -270,7 +273,7 @@
       overflow: hidden;
       border-radius: 16px;
       position: relative;
-      background: var(--cloud);
+      background: #fdf8f3;
       justify-content: center;
     }
 
@@ -330,7 +333,7 @@
     @media (min-width: 768px) {
       .hero {
         grid-template-columns: 1fr 1fr;
-        gap: 1.25rem;
+        gap: 0.75rem;
         padding: 4rem 4rem;
       }
 
@@ -353,23 +356,28 @@
 
       .hero-visual {
         margin-top: 0;
-        --hero-h: 420px;
+        --hero-h: 480px;
       }
     }
 
     @media (min-width: 1024px) {
       .hero {
         padding: 4rem 6rem;
+        gap: 0.85rem;
       }
 
       .hero-content h1 {
         font-size: 3.5rem;
       }
+
+      .hero-visual {
+        --hero-h: 520px;
+      }
     }
 
     /* ----- Mobile: optimized layout ----- */
     @media (max-width: 768px) {
-      .tag-bar { padding: 0.5rem 1rem; font-size: 0.8rem; }
+      .tag-bar { padding: 0.75rem 1rem; font-size: 1rem; }
       header { padding: 0.5rem 1rem; }
       .logo { height: 90px; }
       .burger { width: 44px; height: 44px; }
@@ -386,7 +394,7 @@
         text-align: center;
         padding: 0.85rem 0.75rem;
         gap: 0.75rem;
-        background: rgba(250, 250, 250, 0.92);
+        background: rgba(253, 248, 243, 0.95);
         backdrop-filter: blur(10px);
         border-radius: 16px;
       }
@@ -545,14 +553,14 @@
 
     .gallery-section .section-title {
       display: inline-block;
-      max-width: 20em;
-      font-size: clamp(2rem, 5vw, 2.85rem);
+      max-width: 22em;
+      font-size: clamp(2.25rem, 5.5vw, 3.25rem);
       font-weight: 800;
       line-height: 1.35;
       letter-spacing: -0.02em;
       color: var(--white);
       text-align: center;
-      margin: 0 auto 1rem;
+      margin: 0 auto 1.25rem;
       padding: 0 1rem;
       z-index: 20;
       position: relative;
@@ -562,10 +570,10 @@
 
     .gallery-section .section-title span {
       display: block;
-      font-size: 1rem;
+      font-size: 1.2rem;
       font-weight: 600;
-      letter-spacing: 0.25em;
-      margin-bottom: 0.75rem;
+      letter-spacing: 0.22em;
+      margin-bottom: 0.85rem;
       opacity: 0.95;
       direction: rtl;
     }
@@ -629,16 +637,16 @@
       .gallery-section .curve-bottom { height: 40px; }
       .gallery-section .container { padding: 1rem 1rem 0.5rem; }
       .gallery-section .section-title {
-        font-size: 1.4rem;
+        font-size: 1.75rem;
         line-height: 1.4;
         max-width: 100%;
-        margin-bottom: 0.85rem;
+        margin-bottom: 1rem;
         padding: 0 0.5rem;
       }
       .gallery-section .section-title span {
-        font-size: 0.72rem;
-        letter-spacing: 0.15em;
-        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+        letter-spacing: 0.18em;
+        margin-bottom: 0.6rem;
       }
       .gallery-scroll-wrap { padding: 0.5rem 0 0.85rem; }
       .gallery-card { 
@@ -656,13 +664,13 @@
     /* ----- Steps: Single Comparison Card (media left, steps right) ----- */
     .steps-section {
       position: relative;
-      background: linear-gradient(180deg, var(--white) 0%, #f5f0ff 50%, #fef5f8 100%);
+      background: linear-gradient(180deg, var(--white) 0%, #faf5fc 50%, #fef5f8 100%);
       padding: 1rem 0 5rem;
       overflow: hidden;
     }
 
     .steps-section .container {
-      max-width: 1100px;
+      max-width: 1280px;
       margin: 0 auto;
       padding: 0 1.5rem;
       position: relative;
@@ -671,20 +679,20 @@
 
     .steps-section .section-head {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.25rem;
     }
 
     .steps-section .section-head p {
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       text-transform: uppercase;
-      letter-spacing: 0.35em;
+      letter-spacing: 0.3em;
       color: var(--purple);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
       font-weight: 600;
     }
 
     .steps-section .section-head h2 {
-      font-size: clamp(2rem, 4.5vw, 2.75rem);
+      font-size: clamp(2.15rem, 5vw, 3rem);
       font-weight: 800;
       letter-spacing: -0.02em;
       color: var(--text);
@@ -696,7 +704,7 @@
     /* Single comparison card */
     .comparison-card {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.35fr 0.65fr;
       gap: 0;
       background: var(--white);
       border-radius: 24px;
@@ -733,16 +741,24 @@
     }
 
     @media (min-width: 769px) {
-      .comparison-card .card-media { min-height: 420px; }
-      .comparison-card .step-media { padding: 2rem; }
+      .comparison-card .card-media { min-height: 640px; }
+      .comparison-card .step-media { padding: 1.25rem; }
       .comparison-card .step-media img {
-        max-height: 380px;
-        border-radius: 16px;
-      }
-      .comparison-card .step-media-video video {
-        max-height: 380px;
+        max-height: 600px;
         max-width: 100%;
         width: auto;
+        border-radius: 16px;
+      }
+      .comparison-card .step-media-video {
+        align-items: stretch;
+        justify-content: stretch;
+      }
+      .comparison-card .step-media-video video {
+        max-height: 600px;
+        min-height: 480px;
+        width: 100%;
+        max-width: 100%;
+        object-fit: contain;
         border-radius: 16px;
       }
     }
@@ -934,9 +950,9 @@
       /* Steps section - IMPROVED layout */
       .steps-section { padding: 2.5rem 0 3.5rem; }
       .steps-section .container { padding: 0 1rem; }
-      .steps-section .section-head { margin-bottom: 1.5rem; }
-      .steps-section .section-head p { font-size: 0.7rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; }
-      .steps-section .section-head h2 { font-size: 1.4rem; line-height: 1.35; }
+      .steps-section .section-head { margin-bottom: 1.75rem; }
+      .steps-section .section-head p { font-size: 0.95rem; letter-spacing: 0.2em; margin-bottom: 0.55rem; }
+      .steps-section .section-head h2 { font-size: 1.6rem; line-height: 1.35; }
       
       .comparison-card { 
         grid-template-columns: 1fr; 
@@ -1003,7 +1019,7 @@
   </style>
 </head>
 <body>
-  <div class="tag-bar">قصص مخصصة ١٠٠٪ — هدية لا تُنسى</div>
+  <div class="tag-bar">قصص مخصصة 100% — هدية لا تُنسى</div>
   <header>
     <div class="header-left">
       <button type="button" class="burger" id="burger-btn" aria-label="Open menu" aria-expanded="false">

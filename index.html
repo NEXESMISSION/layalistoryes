@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Layali — ليالي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&family=Noto+Kufi+Arabic:wght@400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* From logo + reference: pastels + brand orange */
+      --blue-deep: #2c5282;
+      --blue-mid: #4299e1;
+      --lavender: #b794f6;
+      --purple: #9f7aea;
+      --pink: #ed64a6;
+      --gold: #ecc94b;
+      --white: #fafafa;
+      --cloud: #e6fffa;
+      --text: #111111;
+      --text-soft: #333333;
+      --brand-orange: #F79328;
+      --brand-orange-hover: #e0831e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: linear-gradient(165deg, var(--white) 0%, var(--cloud) 50%, #fef5f8 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ----- Header: burger (left) | logo (center) | search + cart (right) ----- */
+    header {
+      padding: 0.875rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 1rem;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .logo {
+      height: 144px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Burger menu */
+    .burger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      padding: 10px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .burger:hover {
+      background: rgba(159, 122, 234, 0.1);
+    }
+
+    .burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 1px;
+      transition: background 0.2s;
+    }
+
+    .burger:hover span {
+      background: var(--purple);
+    }
+
+    /* Search & Cart icons */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .header-actions a,
+    .header-actions button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      border-radius: 8px;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .header-actions a:hover,
+    .header-actions button:hover {
+      background: rgba(159, 122, 234, 0.1);
+      color: var(--purple);
+    }
+
+    .header-actions svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    /* Page names under header — desktop only, no burger on desktop */
+    .header-nav {
+      display: none;
+    }
+
+    @media (min-width: 769px) {
+      .burger {
+        display: none;
+      }
+
+      .header-nav {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        padding: 0.35rem 1.5rem 0.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        direction: rtl;
+      }
+
+      .header-nav a {
+        color: var(--text-soft);
+        text-decoration: none;
+        font-family: 'Noto Kufi Arabic', sans-serif;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+
+      .header-nav a:hover {
+        color: var(--purple);
+      }
+    }
+
+    /* ----- Tag bar (top promo) ----- */
+    .tag-bar {
+      background: linear-gradient(90deg, var(--purple) 0%, var(--pink) 100%);
+      color: var(--white);
+      text-align: center;
+      padding: 0.5rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    /* ----- Hero: RTL — images left, text right (Arabic) ----- */
+    html { scroll-behavior: smooth; }
+
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+      order: 2;
+      position: relative;
+      z-index: 10;
+      padding: 1rem;
+      border-radius: 12px;
+      direction: rtl;
+    }
+
+    .hero-visual {
+      order: 1;
+    }
+
+    .hero-content h1 {
+      font-family: 'Noto Kufi Arabic', 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 2.25rem;
+      line-height: 1.4;
+      color: var(--text);
+      direction: rtl;
+    }
+
+    .hero-content p {
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 1.2rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+      max-width: 28rem;
+      direction: rtl;
+    }
+
+    .hero-content .cta {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 0.875rem 2rem;
+      background: var(--purple);
+      color: var(--white);
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(159, 122, 234, 0.35);
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+
+    .hero-content .cta:hover {
+      background: var(--pink);
+      box-shadow: 0 6px 20px rgba(237, 100, 166, 0.4);
+    }
+
+    /* Images: 2 cols, square images. 2 squares + 1 gap = height = seamless, bigger squares. */
+    .hero-visual {
+      --hero-h: 340px;
+      --hero-gap: 0.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, calc((var(--hero-h) - var(--hero-gap) * 1) / 2));
+      gap: 0.75rem;
+      order: 1;
+      margin-top: 0;
+      height: var(--hero-h);
+      overflow: hidden;
+      border-radius: 16px;
+      position: relative;
+      background: var(--cloud);
+      justify-content: center;
+    }
+
+    /* Track = 2 sets + gap between them so every image has spacing; move by set+gap = seamless */
+    .scroll-col-up,
+    .scroll-col-down {
+      display: flex;
+      flex-direction: column;
+      gap: var(--hero-gap);
+      width: 100%;
+      height: calc(2 * var(--hero-h) + var(--hero-gap));
+      flex-shrink: 0;
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .scroll-set {
+      height: var(--hero-h);
+      min-height: var(--hero-h);
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--hero-gap);
+    }
+
+    .scroll-set .story-img {
+      width: 100%;
+      aspect-ratio: 1;
+      flex-shrink: 0;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .scroll-col-up {
+      animation: scroll-up 28s linear infinite;
+    }
+
+    .scroll-col-down {
+      animation: scroll-down 28s linear infinite;
+    }
+
+    /* Move by exactly one set + gap so loop lands on duplicate with no jump */
+    @keyframes scroll-up {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(0, calc(-1 * var(--hero-h) - var(--hero-gap)), 0); }
+    }
+
+    @keyframes scroll-down {
+      0% { transform: translate3d(0, calc(-1 * var(--hero-h) - var(--hero-gap)), 0); }
+      100% { transform: translate3d(0, 0, 0); }
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    @media (min-width: 768px) {
+      .hero {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+        padding: 4rem 4rem;
+      }
+
+      .hero-content {
+        padding: 0;
+        background: transparent;
+      }
+
+      .hero-content h1 {
+        font-size: 3rem;
+      }
+
+      .hero-content p {
+        font-size: 1.25rem;
+      }
+
+      .hero-content .cta {
+        width: auto;
+      }
+
+      .hero-visual {
+        margin-top: 0;
+        --hero-h: 420px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero {
+        padding: 4rem 6rem;
+      }
+
+      .hero-content h1 {
+        font-size: 3.5rem;
+      }
+    }
+
+    /* ----- Mobile: optimized layout ----- */
+    @media (max-width: 768px) {
+      .tag-bar { padding: 0.5rem 1rem; font-size: 0.8rem; }
+      header { padding: 0.5rem 1rem; }
+      .logo { height: 90px; }
+      .burger { width: 44px; height: 44px; }
+      .burger span { width: 20px; }
+      .header-actions a,
+      .header-actions button { width: 44px; height: 44px; }
+      .header-actions svg { width: 20px; height: 20px; }
+
+      /* Hero section - reduced spacing between content and images */
+      .hero { padding: 1rem 1rem 1.25rem; gap: 0.75rem; }
+      .hero-content {
+        order: 1;
+        align-items: center;
+        text-align: center;
+        padding: 0.85rem 0.75rem;
+        gap: 0.75rem;
+        background: rgba(250, 250, 250, 0.92);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+      }
+      .hero-content h1 { font-size: 1.5rem; line-height: 1.4; }
+      .hero-content p { font-size: 0.92rem; line-height: 1.6; max-width: none; }
+      .hero-content .cta { padding: 0.75rem 1.5rem; font-size: 0.95rem; border-radius: 12px; }
+      
+      /* Hero images - MUCH BIGGER */
+      .hero-visual { 
+        order: 2; 
+        --hero-h: 420px; 
+        --hero-gap: 0.6rem;
+        gap: 0.75rem;
+        border-radius: 20px;
+      }
+      .scroll-set .story-img {
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      .mobile-menu { padding: 1.5rem; gap: 1rem; }
+      .mobile-menu a { font-size: 1.1rem; }
+      .mobile-menu-close { top: 1rem; right: 1rem; width: 44px; height: 44px; }
+      .mobile-menu-close svg { width: 22px; height: 22px; }
+    }
+
+    /* ----- Mobile menu (burger) ----- */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(250, 250, 250, 0.98);
+      z-index: 1000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .mobile-menu a {
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      direction: rtl;
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:hover {
+      color: var(--purple);
+    }
+
+    body.menu-open .mobile-menu {
+      display: flex;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+    }
+
+    .mobile-menu-close svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    @media (min-width: 769px) {
+      .mobile-menu {
+        display: none !important;
+      }
+    }
+
+    /* ----- Premium Story Gallery (purple/pink, no orange) ----- */
+    .gallery-section {
+      position: relative;
+      padding: 6rem 0 3rem;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      overflow: hidden;
+    }
+
+    .gallery-section .blob {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.12);
+      filter: blur(60px);
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .gallery-section .blob-1 {
+      width: 400px;
+      height: 400px;
+      top: -100px;
+      left: -100px;
+      animation: gallery-float 20s infinite alternate;
+    }
+
+    .gallery-section .blob-2 {
+      width: 300px;
+      height: 300px;
+      bottom: -50px;
+      right: -50px;
+      animation: gallery-float 15s infinite alternate-reverse;
+    }
+
+    @keyframes gallery-float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(50px, 100px) scale(1.2); }
+    }
+
+    .gallery-section .curve-top,
+    .gallery-section .curve-bottom {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: var(--white);
+      z-index: 10;
+    }
+
+    .gallery-section .curve-top {
+      top: 0;
+      clip-path: ellipse(80% 100% at 50% 0%);
+    }
+
+    .gallery-section .curve-bottom {
+      bottom: 0;
+      clip-path: ellipse(80% 100% at 50% 100%);
+    }
+
+    .gallery-section .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+
+    .gallery-section .section-title {
+      display: inline-block;
+      max-width: 20em;
+      font-size: clamp(2rem, 5vw, 2.85rem);
+      font-weight: 800;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      text-align: center;
+      margin: 0 auto 1rem;
+      padding: 0 1rem;
+      z-index: 20;
+      position: relative;
+      font-family: 'Noto Kufi Arabic', 'Poppins', sans-serif;
+      direction: rtl;
+    }
+
+    .gallery-section .section-title span {
+      display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      margin-bottom: 0.75rem;
+      opacity: 0.95;
+      direction: rtl;
+    }
+
+    .gallery-scroll-wrap {
+      position: relative;
+      overflow: hidden;
+      padding: 0.5rem 0 2rem;
+    }
+
+    .gallery-scroll-container {
+      display: flex;
+      width: max-content;
+      gap: 1.5rem;
+      animation: gallery-scroll 60s linear infinite;
+    }
+
+    @keyframes gallery-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-350px * 5 - 1.5rem * 5)); }
+    }
+
+    .gallery-card {
+      flex: 0 0 350px;
+      width: 350px;
+      height: 480px;
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      cursor: pointer;
+    }
+
+    .gallery-card:hover {
+      transform: scale(1.05) rotate(1deg);
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.35);
+      z-index: 30;
+    }
+
+    .gallery-card .card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.1);
+      transition: transform 0.8s ease;
+    }
+
+    .gallery-card:hover .card-image {
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      /* Gallery section - compact height on mobile, less from bottom */
+      .gallery-section { padding: 3.25rem 0 1rem; }
+      .gallery-section .curve-top,
+      .gallery-section .curve-bottom { height: 40px; }
+      .gallery-section .container { padding: 1rem 1rem 0.5rem; }
+      .gallery-section .section-title {
+        font-size: 1.4rem;
+        line-height: 1.4;
+        max-width: 100%;
+        margin-bottom: 0.85rem;
+        padding: 0 0.5rem;
+      }
+      .gallery-section .section-title span {
+        font-size: 0.72rem;
+        letter-spacing: 0.15em;
+        margin-bottom: 0.5rem;
+      }
+      .gallery-scroll-wrap { padding: 0.5rem 0 0.85rem; }
+      .gallery-card { 
+        flex: 0 0 270px; 
+        width: 270px; 
+        height: 370px;
+        border-radius: 20px;
+      }
+      @keyframes gallery-scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-270px * 5 - 1.5rem * 5)); }
+      }
+    }
+
+    /* ----- Steps: Single Comparison Card (media left, steps right) ----- */
+    .steps-section {
+      position: relative;
+      background: linear-gradient(180deg, var(--white) 0%, #f5f0ff 50%, #fef5f8 100%);
+      padding: 1rem 0 5rem;
+      overflow: hidden;
+    }
+
+    .steps-section .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .steps-section .section-head {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .steps-section .section-head p {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.35em;
+      color: var(--purple);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .steps-section .section-head h2 {
+      font-size: clamp(2rem, 4.5vw, 2.75rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      font-family: 'Noto Kufi Arabic', 'Poppins', sans-serif;
+      direction: rtl;
+      line-height: 1.3;
+    }
+
+    /* Single comparison card */
+    .comparison-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--white);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(159, 122, 234, 0.15), 0 0 0 1px rgba(159, 122, 234, 0.08);
+      position: relative;
+      direction: rtl;
+    }
+
+    /* Radial glow behind media */
+    .comparison-card::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 25%;
+      width: 120%;
+      height: 120%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(ellipse at center, rgba(159, 122, 234, 0.12) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .comparison-card .card-media {
+      position: relative;
+      min-height: 320px;
+      background: linear-gradient(135deg, #f8f5ff 0%, #fef5f8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      z-index: 1;
+      order: -1;
+    }
+
+    @media (min-width: 769px) {
+      .comparison-card .card-media { min-height: 420px; }
+      .comparison-card .step-media { padding: 2rem; }
+      .comparison-card .step-media img {
+        max-height: 380px;
+        border-radius: 16px;
+      }
+      .comparison-card .step-media-video video {
+        max-height: 380px;
+        max-width: 100%;
+        width: auto;
+        border-radius: 16px;
+      }
+    }
+
+    .comparison-card .live-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.75rem;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(159, 122, 234, 0.2);
+      border-radius: 999px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--purple);
+      letter-spacing: 0.02em;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      z-index: 3;
+    }
+
+    .comparison-card .live-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: live-pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes live-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+
+    .comparison-card .step-media {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .comparison-card .step-media.active {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .comparison-card .step-media img {
+      max-width: 100%;
+      max-height: 280px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .comparison-card .step-media-video {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .comparison-card .step-media-video video {
+      max-width: 100%;
+      max-height: 280px;
+      width: auto;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+      background: #111;
+    }
+
+    .comparison-card .card-steps {
+      padding: 2rem 2rem 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      z-index: 1;
+    }
+
+    .comparison-card .step-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(159, 122, 234, 0.08);
+      cursor: pointer;
+      transition: background 0.2s ease;
+      border-radius: 12px;
+      margin: 0 -0.5rem;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+
+    .comparison-card .step-item:last-of-type {
+      border-bottom: none;
+    }
+
+    .comparison-card .step-item:hover {
+      background: rgba(159, 122, 234, 0.04);
+    }
+
+    .comparison-card .step-item.active {
+      background: rgba(159, 122, 234, 0.06);
+    }
+
+    .comparison-card .step-num-circle {
+      width: 2.75rem;
+      height: 2.75rem;
+      min-width: 2.75rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-soft);
+      background: rgba(159, 122, 234, 0.1);
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .comparison-card .step-item.active .step-num-circle {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: var(--white);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 16px rgba(159, 122, 234, 0.35);
+    }
+
+    .comparison-card .step-content h3 {
+      font-family: 'Noto Kufi Arabic', 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+      line-height: 1.3;
+    }
+
+    .comparison-card .step-content p {
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .comparison-card .card-cta {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(159, 122, 234, 0.1);
+    }
+
+    .comparison-card .card-cta .btn-start {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 1rem 1.5rem;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: var(--white);
+      font-family: 'Noto Kufi Arabic', 'Poppins', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 24px rgba(159, 122, 234, 0.3);
+    }
+
+    .comparison-card .card-cta .btn-start:hover {
+      opacity: 0.95;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(159, 122, 234, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      /* Steps section - IMPROVED layout */
+      .steps-section { padding: 2.5rem 0 3.5rem; }
+      .steps-section .container { padding: 0 1rem; }
+      .steps-section .section-head { margin-bottom: 1.5rem; }
+      .steps-section .section-head p { font-size: 0.7rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; }
+      .steps-section .section-head h2 { font-size: 1.4rem; line-height: 1.35; }
+      
+      .comparison-card { 
+        grid-template-columns: 1fr; 
+        border-radius: 20px;
+        box-shadow: 0 16px 48px rgba(159, 122, 234, 0.12);
+      }
+      
+      /* Video area - MUCH BIGGER */
+      .comparison-card .card-media { 
+        min-height: 280px; 
+        order: 0;
+        border-radius: 20px 20px 0 0;
+        padding: 0;
+      }
+      .comparison-card .step-media { 
+        padding: 0.75rem; 
+      }
+      .comparison-card .step-media img { 
+        max-height: none;
+        max-width: 100%;
+        width: 100%;
+        border-radius: 16px; 
+      }
+      .comparison-card .step-media-video { 
+        width: 100%;
+        padding: 0;
+      }
+      .comparison-card .step-media-video video { 
+        max-height: none;
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        min-height: 240px;
+        border-radius: 0;
+        border-radius: 20px 20px 0 0;
+      }
+      
+      .comparison-card .card-steps { 
+        padding: 1.25rem 1rem 1.5rem; 
+        order: 1;
+        gap: 0.25rem;
+      }
+      .comparison-card .step-item { 
+        padding: 0.85rem 0.5rem;
+        gap: 0.85rem;
+        margin: 0 -0.25rem;
+      }
+      .comparison-card .step-num-circle {
+        width: 2.25rem;
+        height: 2.25rem;
+        min-width: 2.25rem;
+        font-size: 0.85rem;
+      }
+      .comparison-card .step-content h3 { font-size: 1rem; margin-bottom: 0.25rem; }
+      .comparison-card .step-content p { font-size: 0.82rem; line-height: 1.55; }
+      
+      .comparison-card .card-cta { margin-top: 1rem; padding-top: 1rem; }
+      .comparison-card .card-cta .btn-start { 
+        padding: 0.85rem 1.25rem; 
+        font-size: 0.95rem;
+        border-radius: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="tag-bar">قصص مخصصة ١٠٠٪ — هدية لا تُنسى</div>
+  <header>
+    <div class="header-left">
+      <button type="button" class="burger" id="burger-btn" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div class="header-center">
+      <img src="NOBG.png" alt="Layali — ليالي" class="logo" />
+    </div>
+    <div class="header-right">
+      <div class="header-actions">
+        <button type="button" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <nav class="header-nav">
+    <a href="#stories">قصص</a>
+    <a href="#how-it-works">كيف يعمل</a>
+    <a href="#gifts">هدايا</a>
+    <a href="#about">من نحن</a>
+    <a href="#contact">تواصل</a>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <button type="button" class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <a href="#stories">قصص</a>
+    <a href="#how-it-works">كيف يعمل</a>
+    <a href="#gifts">هدايا</a>
+    <a href="#about">من نحن</a>
+    <a href="#contact">تواصل</a>
+  </div>
+
+  <main class="hero">
+    <div class="hero-visual no-scrollbar">
+      <div class="scroll-col-up">
+        <div class="scroll-set">
+          <img src="imges/1.png" class="story-img" alt="" />
+          <img src="imges/June_went_to_the_moon%20(1).png" class="story-img" alt="" />
+        </div>
+        <div class="scroll-set">
+          <img src="imges/1.png" class="story-img" alt="" />
+          <img src="imges/June_went_to_the_moon%20(1).png" class="story-img" alt="" />
+        </div>
+      </div>
+      <div class="scroll-col-down">
+        <div class="scroll-set">
+          <img src="imges/Zaid_loves_Baba.png" class="story-img" alt="" />
+          <img src="imges/Elena_I_love_you.png" class="story-img" alt="" />
+        </div>
+        <div class="scroll-set">
+          <img src="imges/Zaid_loves_Baba.png" class="story-img" alt="" />
+          <img src="imges/Elena_I_love_you.png" class="story-img" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <h1>قصص تُصنع<br>خصيصاً لك.</h1>
+      <p>تحويل الذكريات إلى قصص خالدة.</p>
+      <a href="product.html" class="cta">اطلب الآن</a>
+    </div>
+  </main>
+
+  <section class="gallery-section" id="stories">
+    <div class="curve-top"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="container">
+      <h2 class="section-title">
+        <span>أكثر من كلمات</span>
+        قصص تُخلّد اللحظات الجميلة
+      </h2>
+    </div>
+    <div class="gallery-scroll-wrap">
+      <div class="gallery-scroll-container">
+        <div class="gallery-card">
+          <img src="imges/1.png" class="card-image" alt="" />
+        </div>
+        <div class="gallery-card">
+          <img src="imges/June_went_to_the_moon%20(1).png" class="card-image" alt="" />
+        </div>
+        <div class="gallery-card">
+          <img src="imges/Zaid_loves_Baba.png" class="card-image" alt="" />
+        </div>
+        <div class="gallery-card">
+          <img src="imges/Papa_Lily.png" class="card-image" alt="" />
+        </div>
+        <div class="gallery-card">
+          <img src="imges/Elena_I_love_you.png" class="card-image" alt="" />
+        </div>
+        <div class="gallery-card">
+          <img src="imges/1.png" class="card-image" alt="" />
+        </div>
+        <div class="gallery-card">
+          <img src="imges/June_went_to_the_moon%20(1).png" class="card-image" alt="" />
+        </div>
+        <div class="gallery-card">
+          <img src="imges/Zaid_loves_Baba.png" class="card-image" alt="" />
+        </div>
+        <div class="gallery-card">
+          <img src="imges/Papa_Lily.png" class="card-image" alt="" />
+        </div>
+        <div class="gallery-card">
+          <img src="imges/Elena_I_love_you.png" class="card-image" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="curve-bottom"></div>
+  </section>
+
+  <section class="steps-section" id="how-it-works">
+    <div class="container">
+      <div class="section-head">
+        <p>كيف يعمل</p>
+        <h2>الهدية المثالية في 3 خطوات</h2>
+      </div>
+      <div class="comparison-card">
+        <div class="card-steps" role="list">
+          <div class="step-item active" data-step="1" role="button" tabindex="0">
+            <span class="step-num-circle">1</span>
+            <div class="step-content">
+              <h3>شارك قصتك</h3>
+              <p>شارك ذكرياتك المفضلة والحكايات والتفاصيل من خلال واجهة الحكي الموجهة. نوفّر لك طريقة سهلة لجمع جوهر رحلتك دون ضغط الكتابة بنفسك.</p>
+            </div>
+          </div>
+          <div class="step-item" data-step="2" role="button" tabindex="0">
+            <span class="step-num-circle">2</span>
+            <div class="step-content">
+              <h3>راجع المسودة</h3>
+              <p>يحوّل فريقنا قصصك إلى سرد مكتوب باحترافية. تحصل على معاينة رقمية جميلة للمراجعة والتعديل والتنقيح قبل الطباعة النهائية.</p>
+            </div>
+          </div>
+          <div class="step-item" data-step="3" role="button" tabindex="0">
+            <span class="step-num-circle">3</span>
+            <div class="step-content">
+              <h3>الطباعة والشحن</h3>
+              <p>بعد الموافقة، تُطبَع قصتك على ورق فاخر وتُجلَد في كتاب بجودة عالية. نُشحنه إلى المستلم (أو إليك) في تغليف جاهز للهدية.</p>
+            </div>
+          </div>
+          <div class="card-cta">
+            <a href="product.html" class="btn-start">ابدأ قصتك</a>
+          </div>
+        </div>
+        <div class="card-media" aria-label="معاينة حية">
+          <span class="live-badge">Live Preview</span>
+          <div class="step-media step-media-video active">
+            <video controls poster="imges/1.png" preload="metadata" aria-label="كيف تبدو القصص المخصصة">
+              <source src="video/demo.mp4" type="video/mp4" />
+              <source src="video/demo.webm" type="video/webm" />
+              المتصفح لا يدعم تشغيل الفيديو.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var body = document.body;
+      var burger = document.getElementById('burger-btn');
+      var menu = document.getElementById('mobile-menu');
+      var closeBtn = document.getElementById('mobile-menu-close');
+      var menuLinks = menu.querySelectorAll('a');
+
+      function openMenu() {
+        body.classList.add('menu-open');
+        burger.setAttribute('aria-expanded', 'true');
+        menu.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeMenu() {
+        body.classList.remove('menu-open');
+        burger.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+      }
+
+      if (burger) burger.addEventListener('click', openMenu);
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+      menuLinks.forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+      });
+    })();
+
+    (function () {
+      var card = document.querySelector('.comparison-card');
+      if (!card) return;
+      var stepItems = card.querySelectorAll('.step-item[data-step]');
+      var stepMedias = card.querySelectorAll('.step-media[data-step]');
+
+      function setActiveStep(step) {
+        step = String(step);
+        stepItems.forEach(function (el) {
+          if (el.getAttribute('data-step') === step) {
+            el.classList.add('active');
+            el.setAttribute('aria-selected', 'true');
+          } else {
+            el.classList.remove('active');
+            el.setAttribute('aria-selected', 'false');
+          }
+        });
+        stepMedias.forEach(function (el) {
+          if (el.getAttribute('data-step') === step) {
+            el.classList.add('active');
+            el.setAttribute('aria-hidden', 'false');
+          } else {
+            el.classList.remove('active');
+            el.setAttribute('aria-hidden', 'true');
+          }
+        });
+      }
+
+      stepItems.forEach(function (el) {
+        el.addEventListener('click', function () {
+          setActiveStep(this.getAttribute('data-step'));
+        });
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setActiveStep(this.getAttribute('data-step'));
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

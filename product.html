@@ -6,7 +6,7 @@
   <title>Layali — قصة مخصصة</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&family=Noto+Kufi+Arabic:wght@400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --purple: #9f7aea;
@@ -135,21 +135,30 @@
       padding: 1rem 2rem 1rem;
       display: flex;
       justify-content: flex-end;
+      align-items: center;
       direction: rtl;
       box-sizing: border-box;
     }
 
     @media (max-width: 768px) {
-      .page-below-nav { padding: 1.25rem 1.5rem 1rem; }
+      .page-below-nav {
+        padding: 1rem var(--mobile-pad, 1.25rem) 1rem;
+        justify-content: flex-end;
+        min-height: 48px;
+      }
     }
 
     .back-link-top {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
       font-family: 'Noto Kufi Arabic', sans-serif;
       font-size: 0.95rem;
+      font-weight: 500;
       color: var(--text-soft);
       text-decoration: none;
       transition: color 0.2s;
+      padding: 0.5rem 0;
     }
 
     .back-link-top:hover { color: var(--purple); }
@@ -232,8 +241,8 @@
       }
 
       .logo {
-        height: clamp(72px, 20vw, 86px);
-        max-width: min(50vw, 180px);
+        height: clamp(100px, 24vw, 130px);
+        max-width: min(58vw, 220px);
       }
 
       .burger { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
@@ -243,10 +252,18 @@
       .header-nav { padding-left: var(--mobile-pad); padding-right: var(--mobile-pad); }
       
       .page-below-nav { 
-        padding: 1.25rem var(--mobile-pad) 1rem;
-        padding-left: calc(var(--mobile-pad) + 0.5rem);
+        padding: 1rem var(--mobile-pad) 1rem;
       }
-      .back-link-top { font-size: clamp(0.82rem, 2.5vw, 0.9rem); }
+      .back-link-top {
+        font-size: 1.05rem;
+        font-weight: 600;
+        padding: 0.6rem 0.75rem;
+        margin: 0 -0.75rem 0 0;
+        border-radius: 12px;
+        background: rgba(159, 122, 234, 0.08);
+        color: var(--text);
+      }
+      .back-link-top:hover { background: rgba(159, 122, 234, 0.14); }
 
       /* Content: generous padding, no overflow */
       .product-section {
@@ -373,15 +390,13 @@
         outline: none;
       }
 
-      .order-form .form-price {
-        font-size: 1rem;
-        font-weight: 700;
-        color: var(--purple);
-        white-space: nowrap;
-        padding: 0;
-        background: none;
-        border-radius: 0;
-        display: inline;
+      .order-form .form-price-row {
+        padding: 0.9rem 1rem;
+        margin-top: 1rem;
+        margin-bottom: 0.6rem;
+      }
+      .order-form .form-price-row .form-price {
+        font-size: 1.2rem;
       }
 
       .order-form label {
@@ -543,8 +558,8 @@
         font-size: 0.9rem;
       }
 
-      .order-form .form-price {
-        font-size: 0.95rem;
+      .order-form .form-price-row .form-price {
+        font-size: 1.2rem;
       }
 
       .product-page {
@@ -577,10 +592,6 @@
         flex-direction: row;
         align-items: center;
         gap: 0.75rem;
-      }
-
-      .order-form .form-price {
-        flex: 0 0 auto;
       }
     }
 
@@ -835,15 +846,32 @@
       box-shadow: 0 0 0 3px rgba(159, 122, 234, 0.1);
     }
 
+    .order-form .form-price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1.25rem;
+      margin-bottom: 0.75rem;
+      padding: 1rem 1.25rem;
+      background: linear-gradient(135deg, rgba(159, 122, 234, 0.1), rgba(237, 100, 166, 0.08));
+      border-radius: 14px;
+      border: 1px solid rgba(159, 122, 234, 0.15);
+    }
+
+    .order-form .form-price-label {
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
     .order-form .form-price {
       font-family: 'Poppins', sans-serif;
-      font-size: 1.2rem;
+      font-size: 1.35rem;
       font-weight: 700;
       color: var(--purple);
       white-space: nowrap;
-      padding: 0.5rem 1rem;
-      background: linear-gradient(135deg, rgba(159, 122, 234, 0.08), rgba(237, 100, 166, 0.06));
-      border-radius: 10px;
     }
 
     .order-form label {
@@ -1139,7 +1167,7 @@
   </nav>
 
   <div class="page-below-nav">
-    <a href="index.html#stories" class="back-link-top">← العودة للقصص</a>
+    <a href="index.html#stories" class="back-link-top">← العودة</a>
   </div>
 
   <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
@@ -1205,7 +1233,6 @@
                   <option value="160" data-label="غلاف مقوى 20×20 سم">غلاف مقوى مميز 8×8 بوصة / 20×20 سم — 160 TND</option>
                   <option value="185" data-label="غلاف مقوى 28×28 سم">غلاف مقوى مميز 11×11 بوصة / 28×28 سم — 185 TND</option>
                 </select>
-                <span class="form-price" id="product-price">140 TND</span>
               </div>
             </div>
             <input type="hidden" name="variant_option" id="order-variant" value="غلاف ناعم 8×8 بوصة / 20×20 سم — 140 TND" />
@@ -1228,7 +1255,11 @@
               <label for="order-notes">ملاحظات (تفاصيل القصة، اسم المستلم)</label>
               <textarea id="order-notes" name="notes" placeholder="تفاصيل إضافية..." rows="3"></textarea>
             </div>
-            <button type="submit" class="submit-btn">تأكيد الطلب — نتواصل معك فوراً</button>
+            <div class="form-price-row">
+              <span class="form-price-label">السعر الإجمالي</span>
+              <span class="form-price" id="product-price">140 TND</span>
+            </div>
+            <button type="submit" class="submit-btn">تأكيد الطلب</button>
           </form>
           <div class="reassurance-block form-reassurance">
             <div class="reassurance-trust">

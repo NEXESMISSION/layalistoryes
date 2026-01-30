@@ -584,7 +584,7 @@
       }
 
       .order-form .form-row {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 0.85rem;
       }
 
@@ -922,8 +922,8 @@
 
     .order-form .form-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
 
     .order-form .field-note {
@@ -1257,7 +1257,7 @@
             </div>
             <div class="form-price-row">
               <span class="form-price-label">السعر الإجمالي</span>
-              <span class="form-price" id="product-price">140 TND</span>
+              <span class="form-price" id="product-price">140 TND + 7 د.ت توصيل = 147 د.ت</span>
             </div>
             <button type="submit" class="submit-btn">تأكيد الطلب</button>
           </form>
@@ -1349,12 +1349,13 @@
       var select = document.getElementById('product-variant');
       var priceEl = document.getElementById('product-price');
       var hiddenVariant = document.getElementById('order-variant');
+      var deliveryTND = 7;
       if (!select || !priceEl) return;
       function updatePrice() {
         var opt = select.options[select.selectedIndex];
-        var price = opt ? opt.getAttribute('value') : '140';
-        var label = opt ? opt.getAttribute('data-label') + ' — ' + price + ' TND' : '140 TND';
-        priceEl.textContent = price + ' TND';
+        var price = opt ? parseInt(opt.getAttribute('value'), 10) : 140;
+        var total = price + deliveryTND;
+        priceEl.textContent = price + ' TND + ' + deliveryTND + ' د.ت توصيل = ' + total + ' د.ت';
         if (hiddenVariant) hiddenVariant.value = opt ? opt.textContent : '';
       }
       select.addEventListener('change', updatePrice);

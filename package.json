@@ -1,0 +1,7 @@
+{
+  "name": "layali-dreams",
+  "private": true,
+  "scripts": {
+    "build": "node generate-config.js"
+  }
+}

@@ -20,7 +20,7 @@
 alter table public.orders add column if not exists image_urls jsonb default '[]';
 comment on column public.orders.image_urls is 'Array of uploaded image URLs from the form';
 
--- 2) Create/replace submit_order with p_image_urls (used by the product form)
+-- 2) submit_order: only image_urls (works even if hero_image_url/subhero_image_url columns don't exist)
 create or replace function public.submit_order(
   p_customer_name text,
   p_customer_phone text,
@@ -39,11 +39,7 @@ set search_path = public
 as $$
 declare
   new_id uuid;
-  hero_url text;
-  subhero_url text;
 begin
-  hero_url := nullif(trim(p_image_urls->>0), '');
-  subhero_url := nullif(trim(p_image_urls->>1), '');
   insert into public.orders (
     customer_name,
     customer_phone,
@@ -53,8 +49,6 @@ begin
     variant_price,
     delivery_price,
     total_price,
-    hero_image_url,
-    subhero_image_url,
     image_urls
   ) values (
     p_customer_name,
@@ -65,8 +59,6 @@ begin
     p_variant_price,
     p_delivery_price,
     p_total_price,
-    hero_url,
-    subhero_url,
     coalesce(p_image_urls, '[]'::jsonb)
   )
   returning id into new_id;

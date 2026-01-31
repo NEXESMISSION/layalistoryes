@@ -1,10 +1,14 @@
--- submit_order with multiple images (image_urls jsonb)
--- Run after adding image_urls column (see add-image-urls-column.sql or schema.sql).
--- First two URLs in the array are also stored as hero_image_url and subhero_image_url for backward compat.
+-- =============================================================================
+-- submit_order: multiple images in ONE column (image_urls only)
+-- Use this if your orders table does NOT have hero_image_url / subhero_image_url.
+-- Run in Supabase SQL Editor.
+-- =============================================================================
 
+-- Ensure image_urls column exists
 alter table public.orders add column if not exists image_urls jsonb default '[]';
-comment on column public.orders.image_urls is 'Array of uploaded image URLs from the form';
+comment on column public.orders.image_urls is 'All uploaded image URLs (multiple per order)';
 
+-- submit_order: inserts only image_urls (no hero_image_url, subhero_image_url)
 create or replace function public.submit_order(
   p_customer_name text,
   p_customer_phone text,
@@ -23,11 +27,7 @@ set search_path = public
 as $$
 declare
   new_id uuid;
-  hero_url text;
-  subhero_url text;
 begin
-  hero_url := nullif(trim(p_image_urls->>0), '');
-  subhero_url := nullif(trim(p_image_urls->>1), '');
   insert into public.orders (
     customer_name,
     customer_phone,
@@ -37,8 +37,6 @@ begin
     variant_price,
     delivery_price,
     total_price,
-    hero_image_url,
-    subhero_image_url,
     image_urls
   ) values (
     p_customer_name,
@@ -49,8 +47,6 @@ begin
     p_variant_price,
     p_delivery_price,
     p_total_price,
-    hero_url,
-    subhero_url,
     coalesce(p_image_urls, '[]'::jsonb)
   )
   returning id into new_id;
@@ -60,5 +56,3 @@ $$;
 
 grant execute on function public.submit_order(text, text, text, text, text, numeric, numeric, numeric, jsonb) to anon;
 grant execute on function public.submit_order(text, text, text, text, text, numeric, numeric, numeric, jsonb) to authenticated;
-
--- If you get "column hero_image_url does not exist", run submit-order-images-only.sql instead.

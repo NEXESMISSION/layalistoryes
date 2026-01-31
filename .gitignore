@@ -1,0 +1,8 @@
+# Do not commit secrets
+config.js
+.env
+.env.local
+
+# Supabase
+.supabase/.branches
+.supabase/.temp

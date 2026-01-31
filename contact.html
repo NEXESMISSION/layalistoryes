@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>history.scrollRestoration = 'manual';</script>
+  <title>تواصل — ليالي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="pages.css" />
+  <style>
+    .contact-list { list-style: none; margin-top: 1rem; }
+    .contact-list li { margin-bottom: 0.75rem; font-size: 1.05rem; color: var(--text-soft); }
+    .contact-list a { color: var(--purple); font-weight: 600; text-decoration: none; }
+    .contact-list a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="tag-bar">قصص مخصصة 100% — هدية لا تُنسى</div>
+  <header>
+    <div class="header-left">
+      <button type="button" class="burger" id="burger-btn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><img src="NOBG.png" alt="Layali — ليالي" class="logo" /></a>
+    </div>
+    <div class="header-right">
+      <div class="header-actions">
+        <button type="button" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+  <nav class="header-nav">
+    <a href="index.html#stories">قصص</a>
+    <a href="how-it-works.html">كيف يعمل</a>
+    <a href="gifts.html">هدايا</a>
+    <a href="about.html">من نحن</a>
+    <a href="contact.html">تواصل</a>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <button type="button" class="mobile-menu-close" id="mobile-menu-close" aria-label="Close menu">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+    <a href="index.html#stories">قصص</a>
+    <a href="how-it-works.html">كيف يعمل</a>
+    <a href="gifts.html">هدايا</a>
+    <a href="about.html">من نحن</a>
+    <a href="contact.html">تواصل</a>
+  </div>
+
+  <main class="page-content">
+    <h1>تواصل معنا</h1>
+    <p>نحن هنا لمساعدتك في أي استفسار أو لبدء قصتك. تواصل معنا عبر الهاتف أو املأ نموذج الطلب في صفحة المنتج وسنرد عليك في أقرب وقت.</p>
+    <ul class="contact-list">
+      <li>هاتف / واتساب: <a href="tel:+21658415520">58415520</a></li>
+    </ul>
+    <a href="product.html" class="cta">اطلب قصتك الآن</a>
+  </main>
+
+  <footer class="site-footer">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;">
+      <a href="index.html">الرئيسية</a>
+      <a href="how-it-works.html">كيف يعمل</a>
+      <span class="copy">© 2026 ليالي</span>
+    </div>
+    <a href="admin/index.html" class="admin-footer-link">All rights for Layali</a>
+  </footer>
+
+  <script>
+    (function () { window.scrollTo(0, 0); document.addEventListener('DOMContentLoaded', function () { window.scrollTo(0, 0); }); window.addEventListener('load', function () { window.scrollTo(0, 0); }); })();
+    (function () {
+      var burger = document.getElementById('burger-btn');
+      var menu = document.getElementById('mobile-menu');
+      var closeBtn = document.getElementById('mobile-menu-close');
+      var body = document.body;
+      var menuLinks = menu ? menu.querySelectorAll('a') : [];
+      function openMenu() { body.classList.add('menu-open'); if (burger) burger.setAttribute('aria-expanded', 'true'); if (menu) menu.setAttribute('aria-hidden', 'false'); }
+      function closeMenu() { body.classList.remove('menu-open'); if (burger) burger.setAttribute('aria-expanded', 'false'); if (menu) menu.setAttribute('aria-hidden', 'true'); }
+      if (burger) burger.addEventListener('click', openMenu);
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+      menuLinks.forEach(function (link) { link.addEventListener('click', closeMenu); });
+    })();
+  </script>
+</body>
+</html>

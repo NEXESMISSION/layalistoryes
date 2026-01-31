@@ -391,13 +391,22 @@
         outline: none;
       }
 
-      .order-form .form-price-row {
-        padding: 0.9rem 1rem;
+      .order-form .form-price-card {
         margin-top: 1rem;
         margin-bottom: 0.6rem;
       }
-      .order-form .form-price-row .form-price {
-        font-size: 1.2rem;
+      .order-form .form-price-card-title {
+        padding: 0.75rem 1rem 0.4rem;
+        font-size: 0.95rem;
+      }
+      .order-form .form-price-lines {
+        padding: 0 1rem 0.4rem;
+      }
+      .order-form .form-price-total {
+        padding: 0.75rem 1rem;
+      }
+      .order-form .form-price-total-value {
+        font-size: 1.35rem;
       }
 
       .order-form label {
@@ -559,8 +568,8 @@
         font-size: 0.9rem;
       }
 
-      .order-form .form-price-row .form-price {
-        font-size: 1.2rem;
+      .order-form .form-price-total-value {
+        font-size: 1.3rem;
       }
 
       .product-page {
@@ -847,32 +856,75 @@
       box-shadow: 0 0 0 3px rgba(159, 122, 234, 0.1);
     }
 
-    .order-form .form-price-row {
+    .order-form .form-price-card {
+      margin-top: 1.25rem;
+      margin-bottom: 0.75rem;
+      padding: 0;
+      background: linear-gradient(135deg, rgba(159, 122, 234, 0.08), rgba(237, 100, 166, 0.06));
+      border-radius: 16px;
+      border: 1px solid rgba(159, 122, 234, 0.18);
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(159, 122, 234, 0.06);
+    }
+
+    .order-form .form-price-card-title {
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      padding: 0.85rem 1.25rem 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .order-form .form-price-lines {
+      padding: 0 1.25rem 0.5rem;
+    }
+
+    .order-form .form-price-line {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      margin-top: 1.25rem;
-      margin-bottom: 0.75rem;
-      padding: 1rem 1.25rem;
-      background: linear-gradient(135deg, rgba(159, 122, 234, 0.1), rgba(237, 100, 166, 0.08));
-      border-radius: 14px;
-      border: 1px solid rgba(159, 122, 234, 0.15);
+      gap: 0.75rem;
+      padding: 0.25rem 0;
     }
 
-    .order-form .form-price-label {
+    .order-form .form-price-line-label {
       font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      font-weight: 500;
+    }
+
+    .order-form .form-price-line-value {
+      font-family: 'Poppins', sans-serif;
       font-size: 1rem;
       font-weight: 600;
       color: var(--text);
     }
 
-    .order-form .form-price {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.35rem;
+    .order-form .form-price-total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1.25rem;
+      background: rgba(159, 122, 234, 0.12);
+      border-top: 1px solid rgba(159, 122, 234, 0.15);
+    }
+
+    .order-form .form-price-total-label {
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 1rem;
       font-weight: 700;
+      color: var(--text);
+    }
+
+    .order-form .form-price-total-value {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
       color: var(--purple);
-      white-space: nowrap;
+      letter-spacing: 0.02em;
     }
 
     .order-form label {
@@ -966,6 +1018,70 @@
       box-shadow: 0 6px 20px rgba(159, 122, 234, 0.3);
     }
 
+    .order-form .form-message {
+      margin-top: 0.75rem;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      direction: rtl;
+    }
+    .order-form .form-message.success { background: rgba(34, 197, 94, 0.12); color: #166534; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .order-form .form-message.error { background: rgba(239, 68, 68, 0.1); color: #b91c1c; border: 1px solid rgba(239, 68, 68, 0.25); }
+
+    /* Success popup modal */
+    .order-success-popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.4);
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    .order-success-popup.is-open { display: flex; }
+    .order-success-popup .popup-box {
+      max-width: 420px;
+      width: 100%;
+      padding: 1.75rem;
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(159, 122, 234, 0.15);
+      text-align: center;
+      direction: rtl;
+    }
+    .order-success-popup .popup-title {
+      font-family: 'Noto Kufi Arabic', 'Poppins', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 0.75rem;
+    }
+    .order-success-popup .popup-text {
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 1rem;
+      color: var(--text-soft);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+    .order-success-popup .popup-close {
+      display: inline-block;
+      padding: 0.7rem 1.5rem;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: var(--white);
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .order-success-popup .popup-close:hover { opacity: 0.95; }
 
     /* ----- Product section: conversion-first ----- */
     .product-details {
@@ -1109,10 +1225,11 @@
       max-width: 100%;
       padding: 1.5rem 1.5rem 2rem;
       display: flex;
+      flex-direction: column;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 1rem 1.5rem;
+      gap: 0.5rem 1.5rem;
       border-top: 1px solid rgba(159, 122, 234, 0.1);
       direction: rtl;
       box-sizing: border-box;
@@ -1133,6 +1250,15 @@
       color: var(--text-soft);
       opacity: 0.8;
     }
+
+    .product-footer-mini .admin-link {
+      font-size: 0.7rem;
+      opacity: 0.6;
+      color: var(--text-soft);
+      text-decoration: none;
+      margin-top: 0.25rem;
+    }
+    .product-footer-mini .admin-link:hover { opacity: 1; color: var(--purple); }
 
   </style>
 </head>
@@ -1160,15 +1286,15 @@
     </div>
   </header>
   <nav class="header-nav">
-    <a href="index.html#stories">قصص</a>
-    <a href="index.html#how-it-works">كيف يعمل</a>
-    <a href="index.html#gifts">هدايا</a>
-    <a href="index.html#about">من نحن</a>
-    <a href="index.html#contact">تواصل</a>
+    <a href="stories.html">قصص</a>
+    <a href="how-it-works.html">كيف يعمل</a>
+    <a href="gifts.html">هدايا</a>
+    <a href="about.html">من نحن</a>
+    <a href="contact.html">تواصل</a>
   </nav>
 
   <div class="page-below-nav">
-    <a href="index.html#stories" class="back-link-top">← العودة</a>
+    <a href="index.html" class="back-link-top">← العودة</a>
   </div>
 
   <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
@@ -1177,11 +1303,11 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
-    <a href="index.html#stories">قصص</a>
-    <a href="index.html#how-it-works">كيف يعمل</a>
-    <a href="index.html#gifts">هدايا</a>
-    <a href="index.html#about">من نحن</a>
-    <a href="index.html#contact">تواصل</a>
+    <a href="stories.html">قصص</a>
+    <a href="how-it-works.html">كيف يعمل</a>
+    <a href="gifts.html">هدايا</a>
+    <a href="about.html">من نحن</a>
+    <a href="contact.html">تواصل</a>
   </div>
 
   <section class="product-section" id="product-main">
@@ -1190,9 +1316,8 @@
       <div class="product-image-wrap">
         <div class="product-viewer">
           <div class="product-viewer-video" id="product-viewer-video">
-            <video controls poster="imges/1.png" preload="metadata" aria-label="فيديو العرض" id="product-video">
-              <source src="video/demo.mp4" type="video/mp4" />
-              <source src="video/demo.webm" type="video/webm" />
+            <video controls poster="imges/1.png" preload="none" aria-label="فيديو العرض" id="product-video">
+              <!-- Add video/demo.mp4 and video/demo.webm to enable playback -->
               المتصفح لا يدعم تشغيل الفيديو.
             </video>
           </div>
@@ -1230,13 +1355,13 @@
               <label for="product-variant">نوع المنتج</label>
               <div class="form-variant-row">
                 <select id="product-variant" name="variant" aria-label="اختر نوع المنتج">
-                  <option value="140" data-label="غلاف ناعم 20×20 سم" selected>غلاف ناعم 8×8 بوصة / 20×20 سم — 140 TND</option>
-                  <option value="160" data-label="غلاف مقوى 20×20 سم">غلاف مقوى مميز 8×8 بوصة / 20×20 سم — 160 TND</option>
-                  <option value="185" data-label="غلاف مقوى 28×28 سم">غلاف مقوى مميز 11×11 بوصة / 28×28 سم — 185 TND</option>
+                  <option value="35" data-label="غلاف ناعم 20×20 سم" selected>غلاف ناعم 8×8 بوصة / 20×20 سم — 35 TND</option>
+                  <option value="45" data-label="غلاف مقوى 20×20 سم">غلاف مقوى مميز 8×8 بوصة / 20×20 سم — 45 TND</option>
+                  <option value="55" data-label="غلاف مقوى 28×28 سم">غلاف مقوى مميز 11×11 بوصة / 28×28 سم — 55 TND</option>
                 </select>
               </div>
             </div>
-            <input type="hidden" name="variant_option" id="order-variant" value="غلاف ناعم 8×8 بوصة / 20×20 سم — 140 TND" />
+            <input type="hidden" name="variant_option" id="order-variant" value="غلاف ناعم 8×8 بوصة / 20×20 سم — 45 TND" />
             <div class="form-row">
               <div>
                 <label for="order-name">الاسم الكامل</label>
@@ -1256,12 +1381,34 @@
               <label for="order-notes">ملاحظات (تفاصيل القصة، اسم المستلم)</label>
               <textarea id="order-notes" name="notes" placeholder="تفاصيل إضافية..." rows="3"></textarea>
             </div>
-            <div class="form-price-row">
-              <span class="form-price-label">السعر الإجمالي</span>
-              <span class="form-price" id="product-price">140 TND + 7 د.ت توصيل = 147 د.ت</span>
+            <div class="form-price-card">
+              <div class="form-price-card-title">السعر الإجمالي</div>
+              <div class="form-price-lines">
+                <div class="form-price-line">
+                  <span class="form-price-line-label">المنتج</span>
+                  <span class="form-price-line-value" id="product-price-product">35 TND</span>
+                </div>
+                <div class="form-price-line">
+                  <span class="form-price-line-label">التوصيل</span>
+                  <span class="form-price-line-value" id="product-price-delivery">7 د.ت</span>
+                </div>
+              </div>
+              <div class="form-price-total">
+                <span class="form-price-total-label">المجموع</span>
+                <span class="form-price-total-value" id="product-price">42 د.ت</span>
+              </div>
             </div>
-            <button type="submit" class="submit-btn">تأكيد الطلب</button>
+            <div id="form-message" class="form-message" aria-live="polite" style="display: none;"></div>
+            <button type="submit" class="submit-btn" id="submit-order-btn">تأكيد الطلب</button>
           </form>
+
+          <div id="order-success-popup" class="order-success-popup" aria-hidden="true" role="dialog" aria-labelledby="popup-title">
+            <div class="popup-box">
+              <h2 id="popup-title" class="popup-title">تم استلام طلبك</h2>
+              <p class="popup-text">سنتواصل معك قريباً. إذا لم تصلك أي رسالة يمكنك الاتصال بنا مباشرة: <strong>58415520</strong></p>
+              <button type="button" class="popup-close" id="order-success-popup-close">حسناً</button>
+            </div>
+          </div>
           <div class="reassurance-block form-reassurance">
             <div class="reassurance-trust">
               <span><span class="check" aria-hidden="true">✓</span> قصة مخصصة 100%</span>
@@ -1287,11 +1434,16 @@
   </section>
 
   <footer class="product-footer-mini">
-    <a href="index.html">الرئيسية</a>
-    <a href="index.html#how-it-works">كيف يعمل</a>
-    <span class="copy">© 2026 ليالي</span>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem 1.5rem;">
+      <a href="index.html">الرئيسية</a>
+      <a href="how-it-works.html">كيف يعمل</a>
+      <span class="copy">© 2026 ليالي</span>
+    </div>
+    <a href="admin/index.html" class="admin-link" style="margin-top: 0.25rem;">All rights for Layali</a>
   </footer>
 
+  <script src="js/supabase.min.js"></script>
+  <script src="config.js"></script>
   <script>
     (function () {
       window.scrollTo(0, 0);
@@ -1353,19 +1505,118 @@
 
     (function () {
       var select = document.getElementById('product-variant');
-      var priceEl = document.getElementById('product-price');
+      var productEl = document.getElementById('product-price-product');
+      var deliveryEl = document.getElementById('product-price-delivery');
+      var totalEl = document.getElementById('product-price');
       var hiddenVariant = document.getElementById('order-variant');
       var deliveryTND = 7;
-      if (!select || !priceEl) return;
+      if (!select || !totalEl) return;
       function updatePrice() {
         var opt = select.options[select.selectedIndex];
-        var price = opt ? parseInt(opt.getAttribute('value'), 10) : 140;
+        var price = opt ? parseInt(opt.getAttribute('value'), 10) : 35;
         var total = price + deliveryTND;
-        priceEl.textContent = price + ' TND + ' + deliveryTND + ' د.ت توصيل = ' + total + ' د.ت';
+        if (productEl) productEl.textContent = price + ' TND';
+        if (deliveryEl) deliveryEl.textContent = deliveryTND + ' د.ت';
+        totalEl.textContent = total + ' د.ت';
         if (hiddenVariant) hiddenVariant.value = opt ? opt.textContent : '';
       }
       select.addEventListener('change', updatePrice);
       updatePrice();
+    })();
+
+    (function () {
+      var form = document.querySelector('.order-form');
+      var msgEl = document.getElementById('form-message');
+      var submitBtn = document.getElementById('submit-order-btn');
+      if (!form || !msgEl) return;
+      function showMsg(text, isError) {
+        msgEl.textContent = text;
+        msgEl.className = 'form-message ' + (isError ? 'error' : 'success');
+        msgEl.style.display = 'block';
+      }
+      function hideMsg() {
+        msgEl.style.display = 'none';
+      }
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        hideMsg();
+        var url = typeof window.SUPABASE_URL !== 'undefined' ? window.SUPABASE_URL : '';
+        var key = typeof window.SUPABASE_ANON_KEY !== 'undefined' ? window.SUPABASE_ANON_KEY : '';
+        if (!url || !key) {
+          showMsg('لم يتم إعداد الخادم بعد. تواصل معنا: 58415520', true);
+          return;
+        }
+        var variantPrice = parseInt(document.getElementById('product-variant').value, 10) || 35;
+        var deliveryPrice = 7;
+        var totalPrice = variantPrice + deliveryPrice;
+        var order = {
+          customer_name: form.querySelector('[name="name"]').value.trim(),
+          customer_phone: form.querySelector('[name="phone"]').value.trim(),
+          customer_address: form.querySelector('[name="address"]').value.trim(),
+          notes: form.querySelector('[name="notes"]').value.trim(),
+          variant_option: form.querySelector('[name="variant_option"]').value,
+          variant_price: variantPrice,
+          delivery_price: deliveryPrice,
+          total_price: totalPrice
+        };
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'جاري الإرسال...';
+        var supabase = window.supabase ? window.supabase.createClient(url, key) : null;
+        if (!supabase) {
+          showMsg('خطأ في تحميل Supabase. تحقق من config.js', true);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'تأكيد الطلب';
+          return;
+        }
+        supabase.rpc('submit_order', {
+          p_customer_name: order.customer_name,
+          p_customer_phone: order.customer_phone,
+          p_customer_address: order.customer_address || null,
+          p_notes: order.notes || null,
+          p_variant_option: order.variant_option || null,
+          p_variant_price: order.variant_price,
+          p_delivery_price: order.delivery_price,
+          p_total_price: order.total_price
+        }).then(function (res) {
+            if (res.error) throw res.error;
+            supabase.functions.invoke('send-order-email', { body: order }).catch(function () {});
+            return res;
+          })
+          .then(function () {
+            form.reset();
+            var sel = document.getElementById('product-variant');
+            if (sel) { sel.selectedIndex = 0; sel.dispatchEvent(new Event('change')); }
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'تأكيد الطلب';
+            var popup = document.getElementById('order-success-popup');
+            if (popup) {
+              popup.classList.add('is-open');
+              popup.setAttribute('aria-hidden', 'false');
+            }
+          })
+          .catch(function (err) {
+            showMsg(err.message || 'حدث خطأ. جرّب الاتصال: 58415520', true);
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'تأكيد الطلب';
+          });
+      });
+
+      (function () {
+        var popup = document.getElementById('order-success-popup');
+        var closeBtn = document.getElementById('order-success-popup-close');
+        if (!popup || !closeBtn) return;
+        function closePopup() {
+          closeBtn.blur();
+          if (document.getElementById('submit-order-btn')) document.getElementById('submit-order-btn').focus();
+          else document.body.focus();
+          popup.classList.remove('is-open');
+          popup.setAttribute('aria-hidden', 'true');
+        }
+        closeBtn.addEventListener('click', closePopup);
+        popup.addEventListener('click', function (e) {
+          if (e.target === popup) closePopup();
+        });
+      })();
     })();
 
   </script>

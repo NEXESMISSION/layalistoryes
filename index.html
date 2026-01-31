@@ -1017,6 +1017,22 @@
         border-radius: 12px;
       }
     }
+
+    .site-footer-mini {
+      text-align: center;
+      padding: 1rem 1.5rem 1.5rem;
+      border-top: 1px solid rgba(159, 122, 234, 0.08);
+    }
+    .site-footer-mini .admin-footer-link {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      opacity: 0.6;
+      text-decoration: none;
+    }
+    .site-footer-mini .admin-footer-link:hover {
+      opacity: 1;
+      color: var(--purple);
+    }
   </style>
 </head>
 <body>
@@ -1043,11 +1059,11 @@
     </div>
   </header>
   <nav class="header-nav">
-    <a href="#stories">قصص</a>
-    <a href="#how-it-works">كيف يعمل</a>
-    <a href="#gifts">هدايا</a>
-    <a href="#about">من نحن</a>
-    <a href="#contact">تواصل</a>
+    <a href="stories.html">قصص</a>
+    <a href="how-it-works.html">كيف يعمل</a>
+    <a href="gifts.html">هدايا</a>
+    <a href="about.html">من نحن</a>
+    <a href="contact.html">تواصل</a>
   </nav>
 
   <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
@@ -1056,11 +1072,11 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
-    <a href="#stories">قصص</a>
-    <a href="#how-it-works">كيف يعمل</a>
-    <a href="#gifts">هدايا</a>
-    <a href="#about">من نحن</a>
-    <a href="#contact">تواصل</a>
+    <a href="stories.html">قصص</a>
+    <a href="how-it-works.html">كيف يعمل</a>
+    <a href="gifts.html">هدايا</a>
+    <a href="about.html">من نحن</a>
+    <a href="contact.html">تواصل</a>
   </div>
 
   <main class="hero">
@@ -1260,5 +1276,8 @@
       });
     })();
   </script>
+  <footer class="site-footer-mini">
+    <a href="admin/index.html" class="admin-footer-link">All rights for Layali</a>
+  </footer>
 </body>
 </html>

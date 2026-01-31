@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الطلبات — لوحة تحكم ليالي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root { --purple: #9f7aea; --pink: #ed64a6; --white: #fafafa; --text: #111; --text-soft: #333; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Kufi Arabic', 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f8f5ff 0%, #fef5f8 100%);
+      padding: 1.5rem;
+      direction: rtl;
+    }
+    .admin-header {
+      max-width: 1100px;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .admin-header h1 { font-size: 1.5rem; color: var(--text); }
+    .admin-header a {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .admin-header a:hover { color: var(--purple); }
+    .admin-header .logout {
+      padding: 0.5rem 1rem;
+      background: rgba(239,68,68,0.1);
+      color: #b91c1c;
+      border-radius: 10px;
+    }
+    .admin-header .logout:hover { background: rgba(239,68,68,0.2); color: #b91c1c; }
+    .dashboard-wrap { max-width: 1100px; margin: 0 auto; }
+    .orders-table-wrap {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(159, 122, 234, 0.08);
+      border: 1px solid rgba(159, 122, 234, 0.1);
+      overflow: hidden;
+    }
+    .orders-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .orders-table th,
+    .orders-table td {
+      padding: 0.85rem 1rem;
+      text-align: right;
+      border-bottom: 1px solid rgba(159, 122, 234, 0.08);
+    }
+    .orders-table th {
+      background: rgba(159, 122, 234, 0.06);
+      font-weight: 700;
+      color: var(--text);
+    }
+    .orders-table tr:last-child td { border-bottom: none; }
+    .orders-table tr:hover td { background: rgba(159, 122, 234, 0.03); }
+    .orders-table .date { color: var(--text-soft); font-size: 0.85rem; white-space: nowrap; }
+    .orders-table .notes { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .empty-msg {
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 1rem;
+    }
+    .loading { padding: 2rem; text-align: center; color: var(--text-soft); }
+    .error-msg {
+      padding: 1.5rem;
+      background: rgba(239,68,68,0.1);
+      color: #b91c1c;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+    }
+    @media (max-width: 768px) {
+      .orders-table th, .orders-table td { padding: 0.6rem 0.5rem; font-size: 0.8rem; }
+      .orders-table .notes { max-width: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-header">
+    <h1>الطلبات — ليالي</h1>
+    <div>
+      <a href="../index.html">الرئيسية</a>
+      <span style="margin: 0 0.5rem;">|</span>
+      <a href="#" class="logout" id="logout-btn">تسجيل الخروج</a>
+    </div>
+  </div>
+
+  <div class="dashboard-wrap">
+    <div id="error-msg" class="error-msg" style="display: none;"></div>
+    <div id="loading" class="loading">جاري تحميل الطلبات...</div>
+    <div id="orders-wrap" class="orders-table-wrap" style="display: none;">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>التاريخ</th>
+            <th>الاسم</th>
+            <th>الهاتف</th>
+            <th>العنوان</th>
+            <th>المنتج</th>
+            <th>السعر</th>
+            <th>المجموع</th>
+            <th>ملاحظات</th>
+          </tr>
+        </thead>
+        <tbody id="orders-body"></tbody>
+      </table>
+    </div>
+    <div id="empty-msg" class="empty-msg" style="display: none;">لا توجد طلبات حتى الآن.</div>
+  </div>
+
+  <script src="../js/supabase.min.js"></script>
+  <script src="../config.js"></script>
+  <script>
+    (function () {
+      var url = window.SUPABASE_URL;
+      var key = window.SUPABASE_ANON_KEY;
+      if (!url || !key) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error-msg').textContent = 'أضف config.js (SUPABASE_URL و SUPABASE_ANON_KEY)';
+        document.getElementById('error-msg').style.display = 'block';
+        return;
+      }
+      var supabase = window.supabase.createClient(url, key);
+
+      supabase.auth.getSession().then(function (res) {
+        if (res.data.session) {
+          loadOrders();
+        } else {
+          window.location.href = 'index.html';
+        }
+      });
+
+      document.getElementById('logout-btn').addEventListener('click', function (e) {
+        e.preventDefault();
+        supabase.auth.signOut().then(function () {
+          window.location.href = 'index.html';
+        });
+      });
+
+      function loadOrders() {
+        supabase.from('orders')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .then(function (res) {
+            document.getElementById('loading').style.display = 'none';
+            if (res.error) {
+              document.getElementById('error-msg').textContent = res.error.message;
+              document.getElementById('error-msg').style.display = 'block';
+              return;
+            }
+            var orders = res.data || [];
+            if (orders.length === 0) {
+              document.getElementById('empty-msg').style.display = 'block';
+              return;
+            }
+            document.getElementById('orders-wrap').style.display = 'block';
+            var tbody = document.getElementById('orders-body');
+            tbody.innerHTML = '';
+            orders.forEach(function (row) {
+              var date = row.created_at ? new Date(row.created_at).toLocaleString('ar-TN') : '—';
+              var tr = document.createElement('tr');
+              tr.innerHTML =
+                '<td class="date">' + date + '</td>' +
+                '<td>' + (row.customer_name || '—') + '</td>' +
+                '<td>' + (row.customer_phone || '—') + '</td>' +
+                '<td>' + (row.customer_address || '—') + '</td>' +
+                '<td>' + (row.variant_option || '—') + '</td>' +
+                '<td>' + (row.variant_price != null ? row.variant_price + ' TND' : '—') + '</td>' +
+                '<td>' + (row.total_price != null ? row.total_price + ' د.ت' : '—') + '</td>' +
+                '<td class="notes" title="' + (row.notes || '') + '">' + (row.notes || '—') + '</td>';
+              tbody.appendChild(tr);
+            });
+          });
+      }
+    })();
+  </script>
+</body>
+</html>

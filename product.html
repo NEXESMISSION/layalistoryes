@@ -1733,7 +1733,7 @@
               }).catch(function (err) {
                 if (!hasError) {
                   hasError = true;
-                  showMsg(err.message || 'فشل رفع الصور. جرّب أقل صوراً أو تواصل: 58 415 520', true);
+                  showMsg(err.message || 'فشل رفع الصور. إن ظهر خطأ "row-level security" فشغّل sql/fix-storage-rls.sql في Supabase. أو تواصل: 58 415 520', true);
                   submitBtn.disabled = false;
                   submitBtn.textContent = 'تأكيد الطلب';
                 }

@@ -34,20 +34,22 @@ The form runs in the browser without login, so the bucket must allow **anonymous
    - **WITH CHECK expression:** `true`
 5. Save the policy.
 
-### Option B — Using SQL
+### Option B — Using SQL (recommended: fixes "new row violates row-level security policy")
 
 1. In Supabase go to **SQL Editor** → **New query**.
-2. Paste and run:
+2. Open the file **`sql/fix-storage-rls.sql`** in your project, copy its full contents, paste into the SQL Editor, and run it.
+
+   That script adds:
+   - **INSERT** policy for `anon` on bucket `order-images` (so the form can upload).
+   - **SELECT** policy for `public` on bucket `order-images` (so image URLs load and don’t return 400).
+
+3. If you prefer to run only the upload policy:
 
 ```sql
--- Allow form users (anon) to upload to order-images — all images imported by users go here
 create policy "Allow anon upload"
-on storage.objects for insert
-to anon
+on storage.objects for insert to anon
 with check (bucket_id = 'order-images');
 ```
-
-3. Run the query.
 
 ---
 

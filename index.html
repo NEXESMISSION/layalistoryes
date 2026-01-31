@@ -274,13 +274,14 @@
       box-shadow: 0 6px 20px rgba(237, 100, 166, 0.4);
     }
 
-    /* Hero: 2 columns of square images (2x2 grid visible). Square = (hero-h - gap) / 2 */
+    /* Hero: viewport clips two scrolling columns; square images in 2x2 grid */
     .hero-visual {
       --hero-h: 260px;
       --hero-gap: 0.5rem;
       --hero-square: calc((var(--hero-h) - var(--hero-gap)) / 2);
       display: grid;
       grid-template-columns: var(--hero-square) var(--hero-square);
+      grid-template-rows: var(--hero-h);
       gap: var(--hero-gap);
       order: 1;
       margin-top: 0;
@@ -290,7 +291,7 @@
       position: relative;
       background: #fdf8f3;
       justify-content: center;
-      align-content: center;
+      align-items: start;
     }
 
     .scroll-col-up,
@@ -300,10 +301,12 @@
       gap: var(--hero-gap);
       width: var(--hero-square);
       min-width: var(--hero-square);
+      min-height: calc(2 * var(--hero-h) + var(--hero-gap));
       height: calc(2 * var(--hero-h) + var(--hero-gap));
       flex-shrink: 0;
       will-change: transform;
       backface-visibility: hidden;
+      align-self: start;
     }
 
     .scroll-set {
@@ -328,20 +331,20 @@
     }
 
     .scroll-col-up {
-      animation: scroll-up 28s linear infinite;
+      animation: hero-scroll-up 28s linear infinite;
     }
 
     .scroll-col-down {
-      animation: scroll-down 28s linear infinite;
+      animation: hero-scroll-down 28s linear infinite;
     }
 
-    /* Move by exactly one set + gap so loop lands on duplicate with no jump */
-    @keyframes scroll-up {
+    /* Move by exactly one set + gap so loop is seamless (duplicate content) */
+    @keyframes hero-scroll-up {
       0% { transform: translate3d(0, 0, 0); }
       100% { transform: translate3d(0, calc(-1 * var(--hero-h) - var(--hero-gap)), 0); }
     }
 
-    @keyframes scroll-down {
+    @keyframes hero-scroll-down {
       0% { transform: translate3d(0, calc(-1 * var(--hero-h) - var(--hero-gap)), 0); }
       100% { transform: translate3d(0, 0, 0); }
     }

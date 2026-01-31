@@ -3,6 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="قصة مخصصة — ليالي. حوّل الذكريات إلى قصة مصورة فريدة. كتاب مخصص يحكي قصتك أو قصة من تحبّ — هدية لا تُنسى." />
+  <link rel="icon" href="NOBG.png" type="image/png" />
+  <link rel="apple-touch-icon" href="NOBG.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Layali — قصة مخصصة" />
+  <meta property="og:description" content="قصة مخصصة — ليالي. حوّل الذكريات إلى قصة مصورة فريدة. كتاب مخصص يحكي قصتك أو قصة من تحبّ — هدية لا تُنسى." />
+  <meta property="og:image" content="NOBG.png" />
+  <meta property="og:locale" content="ar_TN" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Layali — قصة مخصصة" />
+  <meta name="twitter:description" content="قصة مخصصة — ليالي. حوّل الذكريات إلى قصة مصورة فريدة. كتاب مخصص يحكي قصتك أو قصة من تحبّ — هدية لا تُنسى." />
+  <meta name="twitter:image" content="NOBG.png" />
   <script>history.scrollRestoration = 'manual';</script>
   <title>Layali — قصة مخصصة</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -57,7 +69,7 @@
     .header-center { display: flex; justify-content: center; align-items: center; }
     .header-right { display: flex; align-items: center; justify-content: flex-end; }
 
-    .logo { height: 144px; width: auto; max-width: 100%; object-fit: contain; flex-shrink: 0; }
+    .logo { height: 120px; width: auto; max-width: 240px; object-fit: contain; flex-shrink: 0; }
 
     .burger {
       display: flex;
@@ -242,8 +254,8 @@
       }
 
       .logo {
-        height: clamp(100px, 24vw, 130px);
-        max-width: min(58vw, 220px);
+        height: 88px;
+        max-width: min(55vw, 200px);
       }
 
       .burger { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
@@ -391,10 +403,24 @@
         outline: none;
       }
 
-      .order-form .form-price-card {
-        margin-top: 1rem;
-        margin-bottom: 0.6rem;
-      }
+    .order-form .form-image-upload { margin-bottom: 0; }
+    .order-form .order-images-preview {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .order-form .order-images-preview .thumb {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(159, 122, 234, 0.2);
+    }
+    .order-form .form-price-card {
+      margin-top: 1rem;
+      margin-bottom: 0.6rem;
+    }
       .order-form .form-price-card-title {
         padding: 0.75rem 1rem 0.4rem;
         font-size: 0.95rem;
@@ -794,7 +820,43 @@
       font-size: 1.05rem;
       color: var(--text-soft);
       line-height: 1.8;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .product-details .call-now-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 100%);
+      color: var(--white);
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(159, 122, 234, 0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .product-details .call-now-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(159, 122, 234, 0.35);
+    }
+    .product-details .call-now-btn:active {
+      transform: translateY(0);
+    }
+    .phone-num {
+      unicode-bidi: isolate;
+      direction: ltr;
+      display: inline-block;
+    }
+    .product-details .product-or-form {
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      margin: -0.5rem 0 1rem;
+      opacity: 0.9;
     }
 
     /* Order form */
@@ -854,6 +916,21 @@
       border-color: var(--purple);
       background: rgba(255, 255, 255, 1);
       box-shadow: 0 0 0 3px rgba(159, 122, 234, 0.1);
+    }
+
+    .order-form .form-image-upload { margin-bottom: 0; }
+    .order-form .order-images-preview {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .order-form .order-images-preview .thumb {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid rgba(159, 122, 234, 0.2);
     }
 
     .order-form .form-price-card {
@@ -1272,7 +1349,7 @@
     </div>
     <div class="header-center">
       <a href="index.html">
-        <img src="NOBG.png" alt="Layali — ليالي" class="logo" />
+        <img src="NOBG.png" alt="Layali — ليالي" class="logo" width="240" height="120" decoding="async" fetchpriority="high" />
       </a>
     </div>
     <div class="header-right">
@@ -1322,7 +1399,7 @@
             </video>
           </div>
           <div class="product-viewer-img is-hidden" id="product-viewer-img">
-            <img id="product-main-img" class="product-main-img" src="imges/1.png" alt="قصة مخصصة — ليالي" />
+            <img id="product-main-img" class="product-main-img" src="imges/1.png" alt="قصة مخصصة — ليالي" width="600" height="600" decoding="async" fetchpriority="high" />
           </div>
         </div>
         <div class="product-media-row" role="tablist" aria-label="فيديو وصور المنتج">
@@ -1331,16 +1408,16 @@
             <span class="play-icon" aria-hidden="true"></span>
           </button>
           <button type="button" class="product-media-btn" data-type="image" data-src="imges/1.png" aria-label="صورة 1" aria-selected="false">
-            <img src="imges/1.png" alt="" />
+            <img src="imges/1.png" alt="" width="80" height="80" loading="lazy" decoding="async" />
           </button>
           <button type="button" class="product-media-btn" data-type="image" data-src="imges/2.png" aria-label="صورة 2" aria-selected="false">
-            <img src="imges/2.png" alt="" />
+            <img src="imges/2.png" alt="" width="80" height="80" loading="lazy" decoding="async" />
           </button>
           <button type="button" class="product-media-btn" data-type="image" data-src="imges/3.png" aria-label="صورة 3" aria-selected="false">
-            <img src="imges/3.png" alt="" />
+            <img src="imges/3.png" alt="" width="80" height="80" loading="lazy" decoding="async" />
           </button>
           <button type="button" class="product-media-btn" data-type="image" data-src="imges/June_went_to_the_moon%20(1).png" aria-label="صورة 4" aria-selected="false">
-            <img src="imges/June_went_to_the_moon%20(1).png" alt="" />
+            <img src="imges/June_went_to_the_moon%20(1).png" alt="" width="80" height="80" loading="lazy" decoding="async" />
           </button>
         </div>
       </div>
@@ -1349,6 +1426,8 @@
         <p class="product-desc">
           حوّل الذكريات إلى قصة مصورة فريدة. كتاب مخصص يحكي قصتك أو قصة من تحبّ — هدية لا تُنسى.
         </p>
+        <a href="tel:+21658415520" class="call-now-btn" aria-label="اتصل الآن 58415520">اتصل الآن — <span class="phone-num" dir="ltr">58 415 520</span></a>
+        <p class="product-or-form">أو املأ النموذج أدناه</p>
         <div class="form-card">
           <form class="order-form" action="#" method="post">
             <div class="form-variant">
@@ -1370,7 +1449,7 @@
               <div>
                 <label for="order-phone">رقم الجوال</label>
                 <input type="tel" id="order-phone" name="phone" required placeholder="+216" />
-                <p class="field-note">سنتواصل معك أو اتصل 58415520</p>
+                <p class="field-note">سنتواصل معك أو اتصل <span class="phone-num" dir="ltr">58 415 520</span></p>
               </div>
             </div>
             <div>
@@ -1380,6 +1459,12 @@
             <div>
               <label for="order-notes">ملاحظات (تفاصيل القصة، اسم المستلم)</label>
               <textarea id="order-notes" name="notes" placeholder="تفاصيل إضافية..." rows="3"></textarea>
+            </div>
+            <div class="form-image-upload">
+              <label for="order-images-input">صور الشخصيات — لإنشاء شخصيات القصة من صورك (اختياري)</label>
+              <input type="file" id="order-images-input" name="order_images" accept="image/*" multiple />
+              <p class="field-note">ارفع صوراً نستخدمها لرسم الشخصيات في قصتك — يمكنك اختيار عدة صور وتظهر المعاينة أدناه</p>
+              <div id="order-images-preview" class="order-images-preview" aria-hidden="true"></div>
             </div>
             <div class="form-price-card">
               <div class="form-price-card-title">السعر الإجمالي</div>
@@ -1405,7 +1490,7 @@
           <div id="order-success-popup" class="order-success-popup" aria-hidden="true" role="dialog" aria-labelledby="popup-title">
             <div class="popup-box">
               <h2 id="popup-title" class="popup-title">تم استلام طلبك</h2>
-              <p class="popup-text">سنتواصل معك قريباً. إذا لم تصلك أي رسالة يمكنك الاتصال بنا مباشرة: <strong>58415520</strong></p>
+              <p class="popup-text">سنتواصل معك قريباً. إذا لم تصلك أي رسالة يمكنك الاتصال بنا مباشرة: <strong class="phone-num" dir="ltr">58 415 520</strong></p>
               <button type="button" class="popup-close" id="order-success-popup-close">حسناً</button>
             </div>
           </div>
@@ -1413,7 +1498,7 @@
             <div class="reassurance-trust">
               <span><span class="check" aria-hidden="true">✓</span> قصة مخصصة 100%</span>
               <span><span class="check" aria-hidden="true">✓</span> جودة عالية</span>
-              <span><span class="check" aria-hidden="true">✓</span> تواصل سريع 58415520</span>
+              <span><span class="check" aria-hidden="true">✓</span> تواصل سريع <span class="phone-num" dir="ltr">58 415 520</span></span>
             </div>
             <div class="reassurance-divider" aria-hidden="true"></div>
             <div class="reassurance-how">
@@ -1537,13 +1622,33 @@
       function hideMsg() {
         msgEl.style.display = 'none';
       }
+      var imagesInput = document.getElementById('order-images-input');
+      var imagesPreview = document.getElementById('order-images-preview');
+      if (imagesInput && imagesPreview) {
+        imagesInput.addEventListener('change', function () {
+          imagesPreview.innerHTML = '';
+          imagesPreview.setAttribute('aria-hidden', 'true');
+          var files = this.files || [];
+          if (files.length === 0) return;
+          imagesPreview.setAttribute('aria-hidden', 'false');
+          for (var i = 0; i < files.length; i++) {
+            if (!files[i].type || files[i].type.indexOf('image/') !== 0) continue;
+            var img = document.createElement('img');
+            img.alt = '';
+            img.className = 'thumb';
+            img.src = URL.createObjectURL(files[i]);
+            imagesPreview.appendChild(img);
+          }
+        });
+      }
+
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         hideMsg();
         var url = typeof window.SUPABASE_URL !== 'undefined' ? window.SUPABASE_URL : '';
         var key = typeof window.SUPABASE_ANON_KEY !== 'undefined' ? window.SUPABASE_ANON_KEY : '';
         if (!url || !key) {
-          showMsg('لم يتم إعداد الخادم بعد. تواصل معنا: 58415520', true);
+          showMsg('لم يتم إعداد الخادم بعد. تواصل معنا: 58 415 520', true);
           return;
         }
         var variantPrice = parseInt(document.getElementById('product-variant').value, 10) || 35;
@@ -1559,6 +1664,7 @@
           delivery_price: deliveryPrice,
           total_price: totalPrice
         };
+        var imageFiles = (document.getElementById('order-images-input') && document.getElementById('order-images-input').files) || [];
         submitBtn.disabled = true;
         submitBtn.textContent = 'جاري الإرسال...';
         var supabase = window.supabase ? window.supabase.createClient(url, key) : null;
@@ -1568,16 +1674,18 @@
           submitBtn.textContent = 'تأكيد الطلب';
           return;
         }
-        supabase.rpc('submit_order', {
-          p_customer_name: order.customer_name,
-          p_customer_phone: order.customer_phone,
-          p_customer_address: order.customer_address || null,
-          p_notes: order.notes || null,
-          p_variant_option: order.variant_option || null,
-          p_variant_price: order.variant_price,
-          p_delivery_price: order.delivery_price,
-          p_total_price: order.total_price
-        }).then(function (res) {
+        function uploadImagesThenSubmit(imageUrls) {
+          supabase.rpc('submit_order', {
+            p_customer_name: order.customer_name,
+            p_customer_phone: order.customer_phone,
+            p_customer_address: order.customer_address || null,
+            p_notes: order.notes || null,
+            p_variant_option: order.variant_option || null,
+            p_variant_price: order.variant_price,
+            p_delivery_price: order.delivery_price,
+            p_total_price: order.total_price,
+            p_image_urls: imageUrls && imageUrls.length ? imageUrls : null
+          }).then(function (res) {
             if (res.error) throw res.error;
             supabase.functions.invoke('send-order-email', { body: order }).catch(function () {});
             return res;
@@ -1586,6 +1694,10 @@
             form.reset();
             var sel = document.getElementById('product-variant');
             if (sel) { sel.selectedIndex = 0; sel.dispatchEvent(new Event('change')); }
+            var prev = document.getElementById('order-images-preview');
+            if (prev) { prev.innerHTML = ''; prev.setAttribute('aria-hidden', 'true'); }
+            var inp = document.getElementById('order-images-input');
+            if (inp) inp.value = '';
             submitBtn.disabled = false;
             submitBtn.textContent = 'تأكيد الطلب';
             var popup = document.getElementById('order-success-popup');
@@ -1595,10 +1707,40 @@
             }
           })
           .catch(function (err) {
-            showMsg(err.message || 'حدث خطأ. جرّب الاتصال: 58415520', true);
+            showMsg(err.message || 'حدث خطأ. جرّب الاتصال: 58 415 520', true);
             submitBtn.disabled = false;
             submitBtn.textContent = 'تأكيد الطلب';
           });
+        }
+
+        if (imageFiles.length === 0) {
+          uploadImagesThenSubmit([]);
+        } else {
+          var bucket = 'order-images';
+          var urls = [];
+          var uploaded = 0;
+          var hasError = false;
+          for (var f = 0; f < imageFiles.length; f++) {
+            (function (file, idx) {
+              var ext = (file.name && file.name.split('.').pop()) || 'jpg';
+              var path = Date.now() + '_' + idx + '_' + Math.random().toString(36).slice(2) + '.' + (ext.replace(/[^a-z0-9]/gi, '') || 'jpg');
+              supabase.storage.from(bucket).upload(path, file, { upsert: false }).then(function (uploadRes) {
+                if (uploadRes.error) throw uploadRes.error;
+                var pub = supabase.storage.from(bucket).getPublicUrl(path);
+                urls[idx] = pub.data.publicUrl;
+                uploaded++;
+                if (uploaded === imageFiles.length) uploadImagesThenSubmit(urls);
+              }).catch(function (err) {
+                if (!hasError) {
+                  hasError = true;
+                  showMsg(err.message || 'فشل رفع الصور. جرّب أقل صوراً أو تواصل: 58 415 520', true);
+                  submitBtn.disabled = false;
+                  submitBtn.textContent = 'تأكيد الطلب';
+                }
+              });
+            })(imageFiles[f], f);
+          }
+        }
       });
 
       (function () {

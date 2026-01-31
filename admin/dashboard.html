@@ -68,6 +68,66 @@
     .orders-table tr:hover td { background: rgba(159, 122, 234, 0.03); }
     .orders-table .date { color: var(--text-soft); font-size: 0.85rem; white-space: nowrap; }
     .orders-table .notes { max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .orders-table .order-images { white-space: nowrap; }
+    .orders-table .order-images a { display: inline-block; margin-left: 0.25rem; }
+    .orders-table .order-images img {
+      width: 36px; height: 36px; object-fit: cover; border-radius: 6px;
+      vertical-align: middle; border: 1px solid rgba(159,122,234,0.2);
+    }
+    .orders-table tr[data-order-id] { cursor: pointer; }
+    .orders-table .btn-delete {
+      padding: 0.35rem 0.65rem;
+      font-size: 0.8rem;
+      background: rgba(239,68,68,0.12);
+      color: #b91c1c;
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .orders-table .btn-delete:hover { background: rgba(239,68,68,0.2); }
+    .detail-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
+    }
+    .detail-modal-overlay.is-open { opacity: 1; visibility: visible; }
+    .detail-modal {
+      background: var(--white);
+      border-radius: 16px;
+      max-width: 480px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      padding: 1.5rem;
+      direction: rtl;
+      text-align: right;
+    }
+    .detail-modal h2 { font-size: 1.2rem; margin-bottom: 1rem; color: var(--text); }
+    .detail-modal .detail-row { margin-bottom: 0.75rem; font-size: 0.95rem; }
+    .detail-modal .detail-label { font-weight: 700; color: var(--text-soft); margin-left: 0.5rem; }
+    .detail-modal .detail-images img { max-width: 120px; max-height: 120px; object-fit: cover; border-radius: 8px; margin-left: 0.5rem; vertical-align: top; }
+    .detail-modal .btn-close-modal {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--purple);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      font-family: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .detail-modal .btn-close-modal:hover { opacity: 0.9; }
     .empty-msg {
       padding: 3rem 1.5rem;
       text-align: center;
@@ -85,6 +145,7 @@
     @media (max-width: 768px) {
       .orders-table th, .orders-table td { padding: 0.6rem 0.5rem; font-size: 0.8rem; }
       .orders-table .notes { max-width: 120px; }
+      .orders-table .order-images img { width: 28px; height: 28px; }
     }
   </style>
 </head>
@@ -112,13 +173,23 @@
             <th>المنتج</th>
             <th>السعر</th>
             <th>المجموع</th>
+            <th>صور (غلاف / ثانوية)</th>
             <th>ملاحظات</th>
+            <th>إجراءات</th>
           </tr>
         </thead>
         <tbody id="orders-body"></tbody>
       </table>
     </div>
     <div id="empty-msg" class="empty-msg" style="display: none;">لا توجد طلبات حتى الآن.</div>
+  </div>
+
+  <div id="detail-modal-overlay" class="detail-modal-overlay" aria-hidden="true" role="dialog" aria-labelledby="detail-modal-title">
+    <div class="detail-modal" id="detail-modal">
+      <h2 id="detail-modal-title">تفاصيل الطلب</h2>
+      <div id="detail-modal-body"></div>
+      <button type="button" class="btn-close-modal" id="detail-modal-close">إغلاق</button>
+    </div>
   </div>
 
   <script src="../js/supabase.min.js"></script>
@@ -150,6 +221,90 @@
         });
       });
 
+      function escapeHtml(s) {
+        if (!s) return '';
+        var div = document.createElement('div');
+        div.textContent = s;
+        return div.innerHTML;
+      }
+
+      var ordersList = [];
+
+      function getOrderImageUrls(row) {
+        var urls = [];
+        if (row.image_urls) {
+          if (Array.isArray(row.image_urls)) {
+            row.image_urls.forEach(function (u) { if (u && typeof u === 'string') urls.push(u.trim()); });
+          } else if (typeof row.image_urls === 'object' && row.image_urls !== null) {
+            Object.keys(row.image_urls).sort().forEach(function (k) {
+              var u = row.image_urls[k];
+              if (u && typeof u === 'string') urls.push(u.trim());
+            });
+          }
+        }
+        if (urls.length === 0 && (row.hero_image_url || row.subhero_image_url)) {
+          if (row.hero_image_url) urls.push(row.hero_image_url.trim());
+          if (row.subhero_image_url) urls.push(row.subhero_image_url.trim());
+        }
+        return urls;
+      }
+
+      function openDetailModal(order) {
+        var body = document.getElementById('detail-modal-body');
+        var date = order.created_at ? new Date(order.created_at).toLocaleString('ar-TN') : '—';
+        var urls = getOrderImageUrls(order);
+        var imgHtml = '';
+        if (urls.length > 0) {
+          imgHtml = '<div class="detail-row detail-images">';
+          urls.forEach(function (u, i) {
+            imgHtml += '<a href="' + escapeHtml(u) + '" target="_blank" rel="noopener"><img src="' + escapeHtml(u) + '" alt="صورة ' + (i + 1) + '" onerror="this.style.display=\'none\'" /></a>';
+          });
+          imgHtml += '</div>';
+        }
+        body.innerHTML =
+          '<div class="detail-row"><span class="detail-label">التاريخ:</span> ' + escapeHtml(date) + '</div>' +
+          '<div class="detail-row"><span class="detail-label">الاسم:</span> ' + escapeHtml(order.customer_name || '—') + '</div>' +
+          '<div class="detail-row"><span class="detail-label">الهاتف:</span> ' + escapeHtml(order.customer_phone || '—') + '</div>' +
+          '<div class="detail-row"><span class="detail-label">العنوان:</span> ' + escapeHtml(order.customer_address || '—') + '</div>' +
+          '<div class="detail-row"><span class="detail-label">المنتج:</span> ' + escapeHtml(order.variant_option || '—') + '</div>' +
+          '<div class="detail-row"><span class="detail-label">سعر المنتج:</span> ' + (order.variant_price != null ? order.variant_price + ' TND' : '—') + '</div>' +
+          '<div class="detail-row"><span class="detail-label">التوصيل:</span> ' + (order.delivery_price != null ? order.delivery_price + ' د.ت' : '—') + '</div>' +
+          '<div class="detail-row"><span class="detail-label">المجموع:</span> ' + (order.total_price != null ? order.total_price + ' د.ت' : '—') + '</div>' +
+          (order.notes ? '<div class="detail-row"><span class="detail-label">ملاحظات:</span> ' + escapeHtml(order.notes) + '</div>' : '') +
+          (urls.length > 0 ? '<div class="detail-row"><span class="detail-label">صور (' + urls.length + '):</span></div>' : '') +
+          imgHtml;
+        var overlay = document.getElementById('detail-modal-overlay');
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeDetailModal() {
+        var overlay = document.getElementById('detail-modal-overlay');
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
+
+      function deleteOrder(id, trEl) {
+        if (!confirm('هل تريد حذف هذا الطلب؟')) return;
+        supabase.from('orders').delete().eq('id', id).then(function (res) {
+          if (res.error) {
+            alert('خطأ: ' + res.error.message);
+            return;
+          }
+          if (trEl && trEl.parentNode) trEl.parentNode.removeChild(trEl);
+          ordersList = ordersList.filter(function (o) { return o.id !== id; });
+          if (ordersList.length === 0) {
+            document.getElementById('orders-wrap').style.display = 'none';
+            document.getElementById('empty-msg').style.display = 'block';
+          }
+        });
+      }
+
+      document.getElementById('detail-modal-close').addEventListener('click', closeDetailModal);
+      document.getElementById('detail-modal-overlay').addEventListener('click', function (e) {
+        if (e.target === this) closeDetailModal();
+      });
+
       function loadOrders() {
         supabase.from('orders')
           .select('*')
@@ -161,27 +316,48 @@
               document.getElementById('error-msg').style.display = 'block';
               return;
             }
-            var orders = res.data || [];
-            if (orders.length === 0) {
+            ordersList = res.data || [];
+            if (ordersList.length === 0) {
               document.getElementById('empty-msg').style.display = 'block';
               return;
             }
             document.getElementById('orders-wrap').style.display = 'block';
+            document.getElementById('empty-msg').style.display = 'none';
             var tbody = document.getElementById('orders-body');
             tbody.innerHTML = '';
-            orders.forEach(function (row) {
+            ordersList.forEach(function (row) {
               var date = row.created_at ? new Date(row.created_at).toLocaleString('ar-TN') : '—';
+              var urls = getOrderImageUrls(row);
+              var imgCell = '—';
+              if (urls.length > 0) {
+                var parts = [];
+                urls.forEach(function (u, i) {
+                  parts.push('<a href="' + escapeHtml(u) + '" target="_blank" rel="noopener" title="صورة ' + (i + 1) + '"><img src="' + escapeHtml(u) + '" alt="" onerror="this.style.display=\'none\'" /></a>');
+                });
+                imgCell = '<span class="order-images">' + parts.join(' ') + '</span>';
+              }
               var tr = document.createElement('tr');
+              tr.setAttribute('data-order-id', row.id);
               tr.innerHTML =
                 '<td class="date">' + date + '</td>' +
-                '<td>' + (row.customer_name || '—') + '</td>' +
-                '<td>' + (row.customer_phone || '—') + '</td>' +
-                '<td>' + (row.customer_address || '—') + '</td>' +
-                '<td>' + (row.variant_option || '—') + '</td>' +
+                '<td>' + escapeHtml(row.customer_name || '—') + '</td>' +
+                '<td>' + escapeHtml(row.customer_phone || '—') + '</td>' +
+                '<td>' + escapeHtml(row.customer_address || '—') + '</td>' +
+                '<td>' + escapeHtml(row.variant_option || '—') + '</td>' +
                 '<td>' + (row.variant_price != null ? row.variant_price + ' TND' : '—') + '</td>' +
                 '<td>' + (row.total_price != null ? row.total_price + ' د.ت' : '—') + '</td>' +
-                '<td class="notes" title="' + (row.notes || '') + '">' + (row.notes || '—') + '</td>';
+                '<td class="order-images-cell">' + imgCell + '</td>' +
+                '<td class="notes" title="' + escapeHtml(row.notes || '') + '">' + escapeHtml(row.notes || '—') + '</td>' +
+                '<td><button type="button" class="btn-delete" data-delete-id="' + escapeHtml(row.id) + '" aria-label="حذف الطلب">حذف</button></td>';
               tbody.appendChild(tr);
+              tr.addEventListener('click', function (e) {
+                if (e.target.classList.contains('btn-delete')) return;
+                openDetailModal(row);
+              });
+              tr.querySelector('.btn-delete').addEventListener('click', function (e) {
+                e.stopPropagation();
+                deleteOrder(row.id, tr);
+              });
             });
           });
       }

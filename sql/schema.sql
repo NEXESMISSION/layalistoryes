@@ -12,7 +12,10 @@ create table if not exists public.orders (
   variant_option text,
   variant_price numeric,
   delivery_price numeric default 7,
-  total_price numeric
+  total_price numeric,
+  hero_image_url text,
+  subhero_image_url text,
+  image_urls jsonb default '[]'
 );
 
 comment on table public.orders is 'Order form submissions from product page';

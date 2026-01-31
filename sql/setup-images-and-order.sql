@@ -1,6 +1,19 @@
--- Run this in Supabase SQL Editor to allow form submissions even when RLS blocks anon insert.
--- This creates a function that inserts into orders with SECURITY DEFINER (runs as owner, bypasses RLS).
+-- =============================================================================
+-- Layali Dreams: Images in form (hero + subhero) + submit_order function
+-- Run this in Supabase SQL Editor (Dashboard → SQL Editor → New query)
+-- Use this if you already have the orders table and want to add image fields
+-- and/or update the submit_order function to save hero_image_url & subhero_image_url.
+-- =============================================================================
 
+-- 1) Add image URL columns to orders (if you created the table before images were added)
+alter table public.orders
+  add column if not exists hero_image_url text,
+  add column if not exists subhero_image_url text;
+
+comment on column public.orders.hero_image_url is 'URL of main/cover image (hero) from the form';
+comment on column public.orders.subhero_image_url is 'URL of secondary image (subhero) from the form';
+
+-- 2) submit_order function (includes hero_image_url and subhero_image_url)
 create or replace function public.submit_order(
   p_customer_name text,
   p_customer_phone text,
@@ -49,6 +62,5 @@ begin
 end;
 $$;
 
--- Allow anon (form) and authenticated to call the function
 grant execute on function public.submit_order(text, text, text, text, text, numeric, numeric, numeric, text, text) to anon;
 grant execute on function public.submit_order(text, text, text, text, text, numeric, numeric, numeric, text, text) to authenticated;

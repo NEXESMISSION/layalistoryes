@@ -2,6 +2,6 @@
   "name": "layali-dreams",
   "private": true,
   "scripts": {
-    "build": "node generate-config.js"
+    "build": "node copy-to-public.js && node generate-config.js public"
   }
 }

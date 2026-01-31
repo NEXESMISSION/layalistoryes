@@ -3,6 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="قصة مخصصة — ليالي. حوّل الذكريات إلى قصة مصورة فريدة. كتاب مخصص يحكي قصتك أو قصة من تحبّ — هدية لا تُنسى." />
+  <link rel="icon" href="NOBG.png" type="image/png" />
+  <link rel="apple-touch-icon" href="NOBG.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Layali — ليالي" />
+  <meta property="og:description" content="قصة مخصصة — ليالي. حوّل الذكريات إلى قصة مصورة فريدة. كتاب مخصص يحكي قصتك أو قصة من تحبّ — هدية لا تُنسى." />
+  <meta property="og:image" content="NOBG.png" />
+  <meta property="og:locale" content="ar_TN" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Layali — ليالي" />
+  <meta name="twitter:description" content="قصة مخصصة — ليالي. حوّل الذكريات إلى قصة مصورة فريدة. كتاب مخصص يحكي قصتك أو قصة من تحبّ — هدية لا تُنسى." />
+  <meta name="twitter:image" content="NOBG.png" />
   <script>history.scrollRestoration = 'manual';</script>
   <title>Layali — ليالي</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -67,8 +79,9 @@
     }
 
     .logo {
-      height: 144px;
+      height: 120px;
       width: auto;
+      max-width: 240px;
       object-fit: contain;
     }
 
@@ -261,13 +274,14 @@
       box-shadow: 0 6px 20px rgba(237, 100, 166, 0.4);
     }
 
-    /* Images: 2 cols, square images. 2 squares + 1 gap = height = seamless, bigger squares. */
+    /* Hero: 2 columns of square images (2x2 grid visible). Square = (hero-h - gap) / 2 */
     .hero-visual {
-      --hero-h: 340px;
+      --hero-h: 260px;
       --hero-gap: 0.5rem;
+      --hero-square: calc((var(--hero-h) - var(--hero-gap)) / 2);
       display: grid;
-      grid-template-columns: repeat(2, calc((var(--hero-h) - var(--hero-gap) * 1) / 2));
-      gap: 0.75rem;
+      grid-template-columns: var(--hero-square) var(--hero-square);
+      gap: var(--hero-gap);
       order: 1;
       margin-top: 0;
       height: var(--hero-h);
@@ -276,15 +290,16 @@
       position: relative;
       background: #fdf8f3;
       justify-content: center;
+      align-content: center;
     }
 
-    /* Track = 2 sets + gap between them so every image has spacing; move by set+gap = seamless */
     .scroll-col-up,
     .scroll-col-down {
       display: flex;
       flex-direction: column;
       gap: var(--hero-gap);
-      width: 100%;
+      width: var(--hero-square);
+      min-width: var(--hero-square);
       height: calc(2 * var(--hero-h) + var(--hero-gap));
       flex-shrink: 0;
       will-change: transform;
@@ -292,21 +307,24 @@
     }
 
     .scroll-set {
+      width: var(--hero-square);
       height: var(--hero-h);
       min-height: var(--hero-h);
       flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-rows: 1fr 1fr;
       gap: var(--hero-gap);
     }
 
     .scroll-set .story-img {
       width: 100%;
-      aspect-ratio: 1;
-      flex-shrink: 0;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
       object-fit: cover;
       border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      display: block;
     }
 
     .scroll-col-up {
@@ -357,7 +375,7 @@
 
       .hero-visual {
         margin-top: 0;
-        --hero-h: 480px;
+        --hero-h: 360px;
       }
     }
 
@@ -372,7 +390,7 @@
       }
 
       .hero-visual {
-        --hero-h: 520px;
+        --hero-h: 380px;
       }
     }
 
@@ -380,7 +398,7 @@
     @media (max-width: 768px) {
       .tag-bar { padding: 0.75rem 1rem; font-size: 1rem; }
       header { padding: 0.5rem 1rem; }
-      .logo { height: 120px; max-width: min(55vw, 200px); }
+      .logo { height: 88px; max-width: min(55vw, 200px); }
       .burger { width: 44px; height: 44px; }
       .burger span { width: 20px; }
       .header-actions a,
@@ -403,12 +421,12 @@
       .hero-content p { font-size: 0.92rem; line-height: 1.6; max-width: none; }
       .hero-content .cta { padding: 0.75rem 1.5rem; font-size: 0.95rem; border-radius: 12px; }
       
-      /* Hero images - MUCH BIGGER */
+      /* Hero images - square 2x2 grid */
       .hero-visual { 
         order: 2; 
-        --hero-h: 420px; 
+        --hero-h: 300px; 
         --hero-gap: 0.6rem;
-        gap: 0.75rem;
+        gap: var(--hero-gap);
         border-radius: 20px;
       }
       .scroll-set .story-img {
@@ -1046,7 +1064,7 @@
       </button>
     </div>
     <div class="header-center">
-      <img src="NOBG.png" alt="Layali — ليالي" class="logo" />
+      <img src="NOBG.png" alt="Layali — ليالي" class="logo" width="240" height="120" decoding="async" fetchpriority="high" />
     </div>
     <div class="header-right">
       <div class="header-actions">
@@ -1083,22 +1101,22 @@
     <div class="hero-visual no-scrollbar">
       <div class="scroll-col-up">
         <div class="scroll-set">
-          <img src="imges/1.png" class="story-img" alt="" />
-          <img src="imges/June_went_to_the_moon%20(1).png" class="story-img" alt="" />
+          <img src="imges/1.png" class="story-img" alt="" width="260" height="260" loading="lazy" decoding="async" />
+          <img src="imges/June_went_to_the_moon%20(1).png" class="story-img" alt="" width="260" height="260" loading="lazy" decoding="async" />
         </div>
         <div class="scroll-set">
-          <img src="imges/1.png" class="story-img" alt="" />
-          <img src="imges/June_went_to_the_moon%20(1).png" class="story-img" alt="" />
+          <img src="imges/1.png" class="story-img" alt="" width="260" height="260" loading="lazy" decoding="async" />
+          <img src="imges/June_went_to_the_moon%20(1).png" class="story-img" alt="" width="260" height="260" loading="lazy" decoding="async" />
         </div>
       </div>
       <div class="scroll-col-down">
         <div class="scroll-set">
-          <img src="imges/Zaid_loves_Baba.png" class="story-img" alt="" />
-          <img src="imges/Elena_I_love_you.png" class="story-img" alt="" />
+          <img src="imges/Zaid_loves_Baba.png" class="story-img" alt="" width="260" height="260" loading="lazy" decoding="async" />
+          <img src="imges/Elena_I_love_you.png" class="story-img" alt="" width="260" height="260" loading="lazy" decoding="async" />
         </div>
         <div class="scroll-set">
-          <img src="imges/Zaid_loves_Baba.png" class="story-img" alt="" />
-          <img src="imges/Elena_I_love_you.png" class="story-img" alt="" />
+          <img src="imges/Zaid_loves_Baba.png" class="story-img" alt="" width="260" height="260" loading="lazy" decoding="async" />
+          <img src="imges/Elena_I_love_you.png" class="story-img" alt="" width="260" height="260" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>
@@ -1122,34 +1140,34 @@
     <div class="gallery-scroll-wrap">
       <div class="gallery-scroll-container">
         <div class="gallery-card">
-          <img src="imges/1.png" class="card-image" alt="" />
+          <img src="imges/1.png" class="card-image" alt="" width="350" height="480" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-card">
-          <img src="imges/June_went_to_the_moon%20(1).png" class="card-image" alt="" />
+          <img src="imges/June_went_to_the_moon%20(1).png" class="card-image" alt="" width="350" height="480" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-card">
-          <img src="imges/Zaid_loves_Baba.png" class="card-image" alt="" />
+          <img src="imges/Zaid_loves_Baba.png" class="card-image" alt="" width="350" height="480" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-card">
-          <img src="imges/Papa_Lily.png" class="card-image" alt="" />
+          <img src="imges/Papa_Lily.png" class="card-image" alt="" width="350" height="480" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-card">
-          <img src="imges/Elena_I_love_you.png" class="card-image" alt="" />
+          <img src="imges/Elena_I_love_you.png" class="card-image" alt="" width="350" height="480" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-card">
-          <img src="imges/1.png" class="card-image" alt="" />
+          <img src="imges/1.png" class="card-image" alt="" width="350" height="480" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-card">
-          <img src="imges/June_went_to_the_moon%20(1).png" class="card-image" alt="" />
+          <img src="imges/June_went_to_the_moon%20(1).png" class="card-image" alt="" width="350" height="480" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-card">
-          <img src="imges/Zaid_loves_Baba.png" class="card-image" alt="" />
+          <img src="imges/Zaid_loves_Baba.png" class="card-image" alt="" width="350" height="480" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-card">
-          <img src="imges/Papa_Lily.png" class="card-image" alt="" />
+          <img src="imges/Papa_Lily.png" class="card-image" alt="" width="350" height="480" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-card">
-          <img src="imges/Elena_I_love_you.png" class="card-image" alt="" />
+          <img src="imges/Elena_I_love_you.png" class="card-image" alt="" width="350" height="480" loading="lazy" decoding="async" />
         </div>
       </div>
     </div>
